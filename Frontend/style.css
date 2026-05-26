@@ -190,11 +190,10 @@ body {
 /* ======================================================
    NAVBAR
 ====================================================== */
-
 #nav {
     width: 100%;
     padding: 20px 40px;
-
+    word-spacing: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
