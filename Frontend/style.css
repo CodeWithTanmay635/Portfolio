@@ -555,3 +555,159 @@ body {
     transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 
 }
+
+/* ======================================================
+   PAPER DETAILS
+====================================================== */
+/* --- Paper details workspace layout ---*/
+.paper-detailed-workspace {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111;
+    color: #fff;
+    padding: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 1. Header Layout */
+.paper-header-container {
+    width: 100%;
+    max-width: 1300px;
+    margin-bottom: 50px;
+}
+
+.paper-main-title{
+    font-size: clamp(2rem, 6vw, 6rem);
+    font-weight: 500;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.header-divider{
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+}
+
+.paper-image {
+    filter: brightness(0.92);
+}
+
+/* Image Graphic Box element */
+.paper-image-wrapper {
+    width: 100%;
+    max-width: 1300px; /* Adjust this value (e.g., 600px, 700px) to make it exactly the size you want */
+    height: auto; 
+    min-height: 500px; /* Optional: Set a minimum height to maintain visual consistency */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 60px;
+    background-color: #1a1a1a;
+    display: block; 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.paper-image-wrapper:hover .paper-image {
+    transform: scale(1.03);
+    filter: brightness(1);
+}
+
+#paper-main-hero-img {
+    width: 100%;
+    height: auto;        
+    display: block;      
+    opacity: 0.95;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.paper-image-wrapper:hover #paper-main-hero-img{
+    transform: scale(1.03);
+    opacity: 1;
+}
+
+.paper-meta-row {
+    width: 100%;
+    max-width: 1300px;
+    margin-bottom: 45px;
+}
+
+.meta-lable {
+    font-size: 11px;
+    font-weight: 700;
+    color: #777;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.meta-value{
+    font-size: 1.25rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.section-dash-line {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    width: 100%;
+    margin: 30px 0;
+}
+
+.abstract-text{
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+    text-align: justify;
+    color: #cccccc;
+    max-width: 1100px;
+    column-count: 2;
+    column-gap: 60px;
+}
+
+.status-text-value {
+    font-family:monospace;
+    font-size: 1.1rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+bottom-dash {
+    margin-top: 25px;
+}
+
+/* --- media queries ---*/
+@media (max-width: 768px) {
+
+    .paper-image-wrapper {
+        min-height: auto;
+        height: auto;
+    }
+
+    .paper-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .abstract-text {
+        column-count: 1;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .paper-main-title {
+        font-size: 4.5rem;
+        line-height: 1;
+    }
+
+}

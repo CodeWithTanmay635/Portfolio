@@ -19,6 +19,13 @@ if (document.fonts) {
     });
 }
 
+//Paper Infograpgic 
+const infographic = document.querySelector("#paper-main-hero-img");
+if (infographic) {
+    infographic.addEventListener("load",() =>{
+        if (scroll) scroll.update();
+    }); 
+}
 
 // ======================================================
 // GLOBAL VARIABLES
@@ -50,14 +57,18 @@ function loadingAnimation() {
         })
 
         .to("#loader", {
-            height: 0,
-            duration: 1.2,
-            ease: "expo.inOut"
-        })
+    height: 0,
+    duration: 1,
+    ease: "expo.inOut",
 
-        .call(function () {
-            firstPageAnim();
-        }, null, "-=0.8");
+    onStart: function () {
+        firstPageAnim();
+    }
+})
+
+            .call(function () {
+             firstPageAnim();
+             }, null, "-=1.2");
 }
 
 
@@ -67,32 +78,34 @@ function loadingAnimation() {
 
 function firstPageAnim() {
 
-    var tl = gsap.timeline();
+    const isMobile = window.innerWidth < 768;
 
-    tl.to(".boundingelem", {
+    gsap.to(".boundingelem", {
         y: 0,
-        ease: "power3.out",
-        duration: 2,
-        stagger: 0.2
-    })
+        ease: "power4.out",
+        duration: isMobile ? 0.8 : 1,
+        stagger: isMobile ? 0.05 : 0.08
+    });
 
-        .from("#herofooter", {
-            y: 10,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power2.out",
+    gsap.from("#herofooter", {
+        y: 10,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out",
 
-            onComplete: function () {
+        onComplete: function () {
 
-                gsap.set("#herofooter", {
-                    clearProps: "all"
-                });
+            gsap.set("#herofooter", {
+                clearProps: "all"
+            });
 
-                if (scroll) scroll.update();
-            }
-        });
+            if (scroll) scroll.update();
+        }
+
+    });
+    
+
 }
-
 
 // ======================================================
 // MINI CIRCLE FOLLOWER
@@ -275,7 +288,6 @@ document.querySelectorAll(".elem").forEach(function (elem) {
     });
 
 });
-
 
 // ======================================================
 // FUNCTION CALLS
