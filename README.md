@@ -413,8 +413,8 @@ We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for de
 
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/portfolio-animation-system.git
-cd portfolio-animation-system
+git clone https://github.com/CodeWithTanmay635/Portfolio
+cd portfolio
 
 # Install dependencies
 npm install
