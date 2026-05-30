@@ -79,8 +79,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/CodeWithTanmay635/Portfolio/edit/main
-cd portfolio-animation-system
+git clone https://github.com/CodeWithTanmay635/Portfolio
+cd portfolio
 
 # Install dependencies via CDN (no build step needed)
 # OR use npm for local development
@@ -167,8 +167,8 @@ import LocomotiveScroll from 'locomotive-scroll';
 ### Option 3: Clone Repository
 
 ```bash
-git clone (https://github.com/CodeWithTanmay635/Portfolio/edit/main/)
-cd portfolio-animation-system
+git clone (https://github.com/CodeWithTanmay635/Portfolio)
+cd portfolio
 npm install
 npm run dev
 ```
