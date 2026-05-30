@@ -82,7 +82,7 @@ function firstPageAnim() {
 
     gsap.to(".boundingelem", {
         y: 0,
-        ease: "power4.out",
+        ease: "power1.out",
         duration: isMobile ? 0.8 : 1,
         stagger: isMobile ? 0.05 : 0.08
     });
@@ -90,7 +90,7 @@ function firstPageAnim() {
     gsap.from("#herofooter", {
         y: 10,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.1,
         ease: "power2.out",
 
         onComplete: function () {

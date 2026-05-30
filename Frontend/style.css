@@ -584,12 +584,14 @@ body {
     letter-spacing: -2px;
     text-transform: uppercase;
     margin-bottom: 20px;
+    animation: slideUp 0.8s ease-out forwards;
+    animation-delay:  0.2s;
 }
 
 .header-divider{
     border: none;
     height: 1px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(225, 215, 215, 0.15);
     width: 100%;
 }
 
@@ -603,13 +605,13 @@ body {
     max-width: 1300px; /* Adjust this value (e.g., 600px, 700px) to make it exactly the size you want */
     height: auto; 
     min-height: 500px; /* Optional: Set a minimum height to maintain visual consistency */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #111;
     border-radius: 6px;
     overflow: hidden;
     margin-bottom: 60px;
-    background-color: #1a1a1a;
+    background-color:  #111;
     display: block; 
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px -12px  #111;
 }
 
 .paper-image-wrapper:hover .paper-image {
@@ -622,7 +624,7 @@ body {
     height: auto;        
     display: block;      
     opacity: 0.95;
-    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: transform 0.1s ease;
 }
 
 .paper-image-wrapper:hover #paper-main-hero-img{
@@ -639,7 +641,7 @@ body {
 .meta-lable {
     font-size: 11px;
     font-weight: 700;
-    color: #777;
+    color: #737272;
     letter-spacing: 2px;
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -653,7 +655,7 @@ body {
 
 .section-dash-line {
     border: none;
-    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    border-top: 1px dashed rgba(225, 215, 215, 0.15);
     width: 100%;
     margin: 30px 0;
 }
@@ -678,6 +680,32 @@ bottom-dash {
     margin-top: 25px;
 }
 
+.paper-tags{
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.paper-tag {
+   padding : 8px 16px;
+   border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #d8d8d8;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.25s ease;
+}
+
+.paper-tag:hover {
+    background: rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
 /* --- media queries ---*/
 @media (max-width: 768px) {
 
@@ -699,6 +727,7 @@ bottom-dash {
 
     .abstract-text {
         column-count: 1;
+        column-gap: 0;
     }
 
 }
@@ -710,4 +739,15 @@ bottom-dash {
         line-height: 1;
     }
 
+}
+
+@keyframes slideUp{
+    from{
+        transform: translateY(100%);
+        opacity: 0;
+    }to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
 }
