@@ -751,3 +751,253 @@ bottom-dash {
     }
     
 }
+
+/* ======================================================
+   PROJECT DETAILS
+====================================================== */
+
+/* --- Projects Deck Viewport Framework --- */
+.projects-deck-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #111;
+    color: #fff;
+    padding: 140px 10vw 80px 10vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.deck-header {
+    width: 100%;
+    max-width: 1300px;
+    margin-bottom: 60px;
+}
+
+.deck-subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    margin-top: 10px;
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+/* --- THE SEPARATED CARD INTERFACE --- */
+.projects-list-grid {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    transition: padding 0.4s cubic-bezier(0.76, 0, 0.24, 1), background-color 0.4s ease;
+}
+
+/* Give top card an upper border boundary row for balance */
+.project-card:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.project-year {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #555;
+    transition: color 0.4s ease;
+}
+
+.project-title {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -1px;
+    transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.card-tags {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.tech-tag {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: #aaa;
+    transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+.arrow-diagonal {
+    font-size: 1.8rem;
+    color: #444;
+    transform: rotate(0deg);
+    transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), color 0.4s ease;
+}
+
+/* --- HOVER INTERACTION STATES --- */
+
+/* Elevates row depth context on hover */
+.project-card:hover {
+    padding-left: 35px;
+    padding-right: 35px;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.project-card:hover .project-title {
+    transform: translateX(10px);
+}
+
+.project-card:hover .project-year {
+    color: #fff;
+}
+
+.project-card:hover .tech-tag {
+    border-color: #fff;
+    color: #fff;
+}
+
+.project-card:hover .arrow-diagonal {
+    transform: translate(3px, -3px); /* Subtle physical slide arrow move */
+    color: #fff;
+}
+
+/*----------------------------------------------------------------------------------*/
+/* --- YouTube-Inspired Grid Layout Matrix --- */
+.youtube-style-grid {
+    width: 100%;
+    max-width: 1300px;
+    display: grid;
+    /* Automatically drops to a single or dual layout on smaller viewports */
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 40px 24px; /* Matches standard high-density layout spatial intervals */
+    margin-top: 20px;
+}
+
+.yt-project-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    background: transparent;
+    transition: transform 0.2s ease;
+}
+
+/* 1. Thumbnail Image Rigid Proportions */
+.thumbnail-wrapper {
+    width: 100%;
+    position: relative;
+    aspect-ratio: 16 / 9; /* Enforces clean cinematic video framing proportions */
+    background-color: #1a1a1a;
+    border-radius: 12px; /* Smooth card corners */
+    overflow: hidden;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Centers and tracks your imagery cleanly inside the frame */
+    transition: border-radius 0.15s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Timestamp Duration Badge Overlay */
+.thumbnail-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 3px 6px;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* 2. Metadata Architecture Row */
+.card-details-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    position: relative;
+    padding: 0 4px;
+}
+
+
+.meta-text-block {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.yt-project-title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #f1f1f1;
+    margin-bottom: 6px;
+    /* Limit the text boundary height to 2 clean lines maximum */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2; /* Standard property for compatibility */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.channel-name {
+    font-size: 0.85rem;
+    color: #aaa; /* Soft gray for tech tags */
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.video-stats {
+    font-size: 0.85rem;
+    color: #717171; /* Subdued gray for view/date lines */
+}
+
+.card-action-menu {
+    color: #aaa;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0; /* Keeps layout clean until active hover */
+    transition: opacity 0.2s ease;
+}
+
+/* --- THE PERFORMANCE HOVER VECTOR PHASES --- */
+
+.yt-project-card:hover .project-thumbnail {
+    transform: scale(1.02); /* Clean, premium platform lift */
+}
+
+.yt-project-card:hover .card-action-menu {
+    opacity: 1; /* Reveals platform triple-dot menu anchor cleanly */
+}
+
+.yt-project-card:hover .yt-project-title {
+    color: #ffffff;
+}
