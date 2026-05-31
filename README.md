@@ -51,7 +51,6 @@
 
 ### Live Examples
 - [Portfolio Website](https://yourportfolio.com) - Full system in action
-- [Animation Breakdown](https://yourportfolio.com/animations) - Individual animation demos
 
 ### Quick Visual Overview
 
@@ -80,8 +79,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/portfolio-animation-system.git
-cd portfolio-animation-system
+git clone https://github.com/CodeWithTanmay635/Portfolio
+cd portfolio
 
 # Install dependencies via CDN (no build step needed)
 # OR use npm for local development
@@ -168,8 +167,8 @@ import LocomotiveScroll from 'locomotive-scroll';
 ### Option 3: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/portfolio-animation-system.git
-cd portfolio-animation-system
+git clone (https://github.com/CodeWithTanmay635/Portfolio)
+cd portfolio
 npm install
 npm run dev
 ```
@@ -414,8 +413,8 @@ We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for de
 
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/portfolio-animation-system.git
-cd portfolio-animation-system
+git clone https://github.com/CodeWithTanmay635/Portfolio
+cd portfolio
 
 # Install dependencies
 npm install
@@ -447,7 +446,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ```
 MIT License
 
-Copyright (c) 2024 [Your Name]
+Copyright (c) 2024 [Tanmay Pansare]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -490,7 +489,7 @@ For more questions, see [FAQ.md](./docs/FAQ.md)
 
 ## 👥 Authors
 
-- **Your Name** - Initial work - [@yourgithub](https://github.com/yourusername)
+- **Tanmay Pansare** - Initial work - (https://github.com/CodeWithTanmay635).
 
 ---
 
@@ -504,9 +503,8 @@ For more questions, see [FAQ.md](./docs/FAQ.md)
 
 ## 📞 Contact
 
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/portfolio-animation-system/issues)
-- **Email**: your.email@example.com
-- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- **GitHub Issues**: [Create an issue]((https://github.com/CodeWithTanmay635/Portfolio/edit/main/))
+- **Email**: tanmaypansare708@outlook.com
 
 ---
 
@@ -514,6 +512,6 @@ For more questions, see [FAQ.md](./docs/FAQ.md)
 
 **[⬆ back to top](#-portfolio-animation-system)**
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by [Tanmay Pansare]([(https://github.com/CodeWithTanmay635)])
 
 </div>
