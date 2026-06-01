@@ -169,6 +169,13 @@ body {
     will-change: transform;
 
     transition: none !important;
+   
+    /* ... your existing cursor styling rules ... */
+    
+    /* CRITICAL: Prevents the custom cursor from blocking mouse hover detections underneath it */
+    pointer-events: none !important;
+    mix-blend-mode: difference; /* Optional: makes it look extremely premium against text overlays */
+
 }
 
 
@@ -1082,4 +1089,24 @@ body {
 .social-anchor:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+}
+/* Add this inside your style.css */
+
+/* Desktop view defaults */
+@media (min-width: 769px) {
+    /* Hide the mobile MENU + button on desktop viewports completely */
+    .menu-toggle, 
+    #nav .menu-btn,
+    #main nav a[href*="menu"] { 
+        display: none !important; 
+    }
+}
+
+/* Mobile view styling */
+@media (max-width: 768px) {
+    /* Hide the main horizontal inline links on mobile devices */
+    .nav-links, 
+    #nav-links {
+        display: none !important;
+    }
 }
