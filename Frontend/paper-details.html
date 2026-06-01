@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="loco.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
-    <title>Papers</title>
+    <title>Research Papers | Tanmay</title>
 </head>
 <body>
     <div id="minicircle"></div>
@@ -19,25 +19,28 @@
                 <a href="project-details.html">Projects</a>
                 <a href="achivements-details.html">Achievements</a>
                 <a href="lets-talk.html">Contact</a>
-
             </div>
         </header>
+
         <main class="paper-detailed-workspace" data-scroll-section>
             <div class="paper-header-container">
                 <div class="bounding">
                     <h1 class="boundingelem paper-main-title">Papers</h1>
                 </div>
-                <hr class = header-divider>
+                <hr class="header-divider">
             </div>
+
             <div class="paper-image-wrapper">
-        <img src="/images/Paper.1.png" alt="Front cover of a research paper showing a CCTV camera icon above a city skyline, with title text Papers and author name Tanmay M. Pansare; conveys a professional, informative tone" id="paper-main-hero-img" data-scroll data-scroll-speed="1">          
-      </div>         
+                <img src="/images/Paper.1.png" alt="Front cover of research paper" id="paper-main-hero-img" data-scroll data-scroll-speed="1">          
+            </div>         
+
             <div class="paper-meta-row authors-section">
                 <h5 class="meta-lable">Authors</h5>
-                <p class="meta-content">Tanmay M. Pansare, Student (BCA),  Ms. Vaishali P. Patel,
-     Assistant Professor</p>
+                <p class="meta-content">Tanmay M. Pansare, Student (BCA), Prof. Vaishali P. Patel, Assistant Professor</p>
             </div>
-               <div class="paper-tag">
+
+            <!-- FIXED: Changed container class from 'paper-tag' to 'paper-tags' to map to CSS rules -->
+            <div class="paper-tags">
                 <span class="paper-tag">YOLOv8</span>
                 <span class="paper-tag">Computer Vision</span>
                 <span class="paper-tag">Smart Cities</span>
@@ -45,20 +48,22 @@
                 <span class="paper-tag">Public Safety</span>
                 <span class="paper-tag">AI Surveillance</span>
             </div>
+
             <div class="paper-meta-row abstract-section">
                 <hr class="section-dash-line">
                 <h5 class="meta-lable">Abstract</h5>
-                <p class="meta-value abstract-text">Urban India faces persistent challenges including littering, 
-                    stray animal welfare, hit-and-run incidents, and hazardous waste disposal. 
-                    This research proposes an AI-powered Smart CCTV System that combines YOLOv8 
-                    object detection and deep learning techniques to monitor public spaces in real time.
-                    The system identifies civic violations, detects injured stray animals, recognizes hit-and-run events, 
-                    and classifies hazardous waste, generating automated alerts for relevant authorities. 
-                    By integrating intelligent surveillance with smart city infrastructure, the proposed solution aims to improve public safety,
-                     cleanliness, and urban management.
+                <p class="meta-value abstract-text">
+                    Urban India faces persistent challenges including littering, stray animal welfare, 
+                    hit-and-run incidents, and hazardous waste disposal. This research proposes an AI-powered 
+                    Smart CCTV System that combines YOLOv8 object detection and deep learning techniques to 
+                    monitor public spaces in real time. The system identifies civic violations, detects injured 
+                    stray animals, recognizes hit-and-run events, and classifies hazardous waste, generating 
+                    automated alerts for relevant authorities. By integrating intelligent surveillance with smart 
+                    city infrastructure, the proposed solution aims to improve public safety, cleanliness, and urban management.
                 </p>
-        <hr class="section-dash-line">
+                <hr class="section-dash-line">
             </div>
+
             <div class="paper-meta-row status-section">
                 <h5 class="meta-lable">Status</h5>
                 <div class="status-badge-container">
@@ -66,12 +71,14 @@
                 </div>
                 <hr class="section-dash-line bottom-dash">
             </div>
-            <div class="meta-lable">for now I can just share only one paper</div>
+            
+            <div class="meta-lable container-notice">Current Platform Index: Serving 1 Published Work</div>
         </main>
-        </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- FIXED: Upgraded Locomotive Scroll engine to 4.1.4 to fix layout calculation failures with data-scroll-container -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>

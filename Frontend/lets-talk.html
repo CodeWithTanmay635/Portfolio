@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,32 +10,60 @@
 </head>
 <body>
     <div id="minicircle"></div>
-
     <div id="main" data-scroll-container>
-        
-        <nav id="nav">
-            <a href="index.html">Tanmay</a>
+        <header id="nav" data-scroll-section>
+            <a href="index.html" class="nav-logo">Tanmay</a>
             <div class="nav-links">
                 <a href="paper-details.html">Papers</a>
                 <a href="achivements-details.html">Achievements</a>
                 <a href="project-details.html">Project</a>
 
             </div>
-        </nav>
-<section class="details-hero">
-    <div class="bounding">
-        <h1 class="boundingelem">Advanced Projects</h1>
+        </header>
+  <main class="contact-workspace" data-scroll-section>
+    <div class="contact-header">
+        <div class="bounding">
+            <h1 class="boundingelem page-main-title">Let's Talk</h1>
+        </div>
+        <p class="contact-subtitle">Have any project Idea in mind? Let's discuss!</p>
     </div>
-    
-    <div class="spec-grid">
-        <div class="spec-item"><h6>Language</h6><p>Java / C++</p></div>
-        <div class="spec-item"><h6>Architecture</h6><p>Object-Oriented (OOPs)</p></div>
+
+    <form id="portfolio-form">
+        <div class="input-group">
+            <label for="form-name">Name <span class="required-star">*</span></label>
+            <input type="text" id="form-name" placeholder="Your name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="form-email">Email <span class="required-star">*</span></label>
+            <input type="email" id="form-email" placeholder="yourname@domain.com" required>
+        </div>
+
+        <div class="input-group">
+            <label for="form-message">Message <span class="required-star">*</span></label>
+            <textarea id="form-message" rows="4" placeholder="Tell me about your project..." required></textarea>
+        </div>
+
+        <div class="form-submit-row">
+            <button type="submit" class="magnetic-button">
+                <span class="magnetic-text">Send Message</span>
+            </button>
+        </div>
+    </form>
+            <footer class="contact-footer-row">
+                <div class="social-links-horizon">
+                    <a href="https://www.linkedin.com/in/tanmay-pansare-5b402b33a" target="_blank" class="social-anchor"><i class="ri-linkedin-box-fill"></i>LinkedIn </a>
+                    <a href="https://github.com/CodeWithTanmay635" target="_blank" class="social-anchor"><i class="ri-github-fill"></i>Github </a>
+                    <a href="https://www.instagram.com/tanmaypansare208/?__pwa=1" target="_blank" class="social-anchor"><i class="ri-instagram-fill"></i>Instagram </a>
+                </div>
+                </footer>
+        </main>
     </div>
-</section>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
     <script src="script.js"></script>
-        </div>
 </body>
 
 </html>

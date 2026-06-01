@@ -207,7 +207,19 @@ body {
     text-decoration: none;
 }
 
-
+.nav-links a {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+/* Forces the links into a clean horizontal horizon, using both class and ID selectors */
+.nav-links, 
+#nav-links {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 30px !important; /* Adjust spacing interval between words */
+}
 /* ======================================================
    HERO HEADING
 ====================================================== */
@@ -557,78 +569,65 @@ body {
 }
 
 /* ======================================================
-   PAPER DETAILS
+   REPAIRED PAPER DETAILS STRUCTURAL SECTION
 ====================================================== */
-/* --- Paper details workspace layout ---*/
 .paper-detailed-workspace {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #111;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #111;
     color: #fff;
-    padding: 200px;
+    padding: 140px 10vw 80px 10vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-/* 1. Header Layout */
 .paper-header-container {
     width: 100%;
     max-width: 1300px;
     margin-bottom: 50px;
 }
 
-.paper-main-title{
-    font-size: clamp(2rem, 6vw, 6rem);
+.paper-main-title {
+    font-size: clamp(2.5rem, 6vw, 6rem);
     font-weight: 500;
     letter-spacing: -2px;
     text-transform: uppercase;
     margin-bottom: 20px;
-    animation: slideUp 0.8s ease-out forwards;
-    animation-delay:  0.2s;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.header-divider{
+.header-divider {
     border: none;
     height: 1px;
-    background-color: rgba(225, 215, 215, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
     width: 100%;
 }
 
-.paper-image {
-    filter: brightness(0.92);
-}
-
-/* Image Graphic Box element */
 .paper-image-wrapper {
     width: 100%;
-    max-width: 1300px; /* Adjust this value (e.g., 600px, 700px) to make it exactly the size you want */
-    height: auto; 
-    min-height: 500px; /* Optional: Set a minimum height to maintain visual consistency */
-    border: 1px solid #111;
-    border-radius: 6px;
+    max-width: 1300px;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     overflow: hidden;
     margin-bottom: 60px;
-    background-color:  #111;
-    display: block; 
-    box-shadow: 0 25px 50px -12px  #111;
+    background-color: #1a1a1a;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
 }
 
-.paper-image-wrapper:hover .paper-image {
-    transform: scale(1.03);
-    filter: brightness(1);
-}
-
+/* FIXED: Target actual Hero image ID correctly for scale properties */
 #paper-main-hero-img {
     width: 100%;
-    height: auto;        
-    display: block;      
-    opacity: 0.95;
-    transition: transform 0.1s ease;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.92;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
-.paper-image-wrapper:hover #paper-main-hero-img{
-    transform: scale(1.03);
+.paper-image-wrapper:hover #paper-main-hero-img {
+    transform: scale(1.02);
     opacity: 1;
 }
 
@@ -647,116 +646,79 @@ body {
     text-transform: uppercase;
 }
 
-.meta-value{
+.meta-content {
     font-size: 1.25rem;
     color: #e0e0e0;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .section-dash-line {
     border: none;
-    border-top: 1px dashed rgba(225, 215, 215, 0.15);
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
     width: 100%;
     margin: 30px 0;
 }
 
-.abstract-text{
-    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+.abstract-text {
+    font-size: clamp(1.1rem, 1.3vw, 1.5rem);
     text-align: justify;
     color: #cccccc;
     max-width: 1100px;
     column-count: 2;
     column-gap: 60px;
+    line-height: 1.6;
+}
+
+.status-badge-container {
+    margin-top: 10px;
 }
 
 .status-text-value {
-    font-family:monospace;
+    font-family: monospace;
     font-size: 1.1rem;
     color: #fff;
-    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-bottom-dash {
-    margin-top: 25px;
-}
-
-.paper-tags{
+/* FIXED: Unified container target tag rule classes */
+.paper-tags {
     width: 100%;
     max-width: 1300px;
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .paper-tag {
-   padding : 8px 16px;
-   border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 999px;
-
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #d8d8d8;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.25s ease;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-tag:hover {
-    background: rgba(0, 0, 0, 0.35);
-    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
     transform: translateY(-2px);
 }
-/* --- media queries ---*/
-@media (max-width: 768px) {
 
-    .paper-image-wrapper {
-        min-height: auto;
-        height: auto;
-    }
-
-    .paper-image {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        display: block;
-    }
-
-}
-
-@media (max-width: 768px) {
-
-    .abstract-text {
-        column-count: 1;
-        column-gap: 0;
-    }
-
-}
-
-@media (max-width: 768px) {
-
-    .paper-main-title {
-        font-size: 4.5rem;
-        line-height: 1;
-    }
-
-}
-
-@keyframes slideUp{
-    from{
-        transform: translateY(100%);
-        opacity: 0;
-    }to{
-        transform: translateY(0);
-        opacity: 1;
-    }
-    
+.production-notice, .container-notice {
+    margin-top: 20px;
+    color: #444;
 }
 
 /* ======================================================
-   PROJECT DETAILS
+   REPAIRED YOUTUBE STYLE GRID FRAMEWORK
 ====================================================== */
-
-/* --- Projects Deck Viewport Framework --- */
 .projects-deck-container {
     width: 100%;
     min-height: 100vh;
@@ -770,123 +732,23 @@ bottom-dash {
 .deck-header {
     width: 100%;
     max-width: 1300px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .deck-subtitle {
     font-size: 1.1rem;
     color: #777;
-    margin-top: 10px;
-    max-width: 500px;
-    line-height: 1.5;
+    margin-top: 15px;
+    max-width: 600px;
+    line-height: 1.6;
 }
 
-/* --- THE SEPARATED CARD INTERFACE --- */
-.projects-list-grid {
-    width: 100%;
-    max-width: 1300px;
-    display: flex;
-    flex-direction: column;
-}
-
-.project-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 40px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    text-decoration: none;
-    color: #fff;
-    position: relative;
-    transition: padding 0.4s cubic-bezier(0.76, 0, 0.24, 1), background-color 0.4s ease;
-}
-
-/* Give top card an upper border boundary row for balance */
-.project-card:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.card-meta {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.project-year {
-    font-family: monospace;
-    font-size: 0.9rem;
-    color: #555;
-    transition: color 0.4s ease;
-}
-
-.project-title {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-weight: 400;
-    letter-spacing: -1px;
-    transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.card-tags {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.tech-tag {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 6px 14px;
-    border-radius: 20px;
-    color: #aaa;
-    transition: border-color 0.4s ease, color 0.4s ease;
-}
-
-.arrow-diagonal {
-    font-size: 1.8rem;
-    color: #444;
-    transform: rotate(0deg);
-    transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), color 0.4s ease;
-}
-
-/* --- HOVER INTERACTION STATES --- */
-
-/* Elevates row depth context on hover */
-.project-card:hover {
-    padding-left: 35px;
-    padding-right: 35px;
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.project-card:hover .project-title {
-    transform: translateX(10px);
-}
-
-.project-card:hover .project-year {
-    color: #fff;
-}
-
-.project-card:hover .tech-tag {
-    border-color: #fff;
-    color: #fff;
-}
-
-.project-card:hover .arrow-diagonal {
-    transform: translate(3px, -3px); /* Subtle physical slide arrow move */
-    color: #fff;
-}
-
-/*----------------------------------------------------------------------------------*/
-/* --- YouTube-Inspired Grid Layout Matrix --- */
 .youtube-style-grid {
     width: 100%;
     max-width: 1300px;
     display: grid;
-    /* Automatically drops to a single or dual layout on smaller viewports */
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 40px 24px; /* Matches standard high-density layout spatial intervals */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px 24px;
     margin-top: 20px;
 }
 
@@ -896,18 +758,15 @@ bottom-dash {
     width: 100%;
     text-decoration: none;
     color: #fff;
-    cursor: pointer;
-    background: transparent;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 1. Thumbnail Image Rigid Proportions */
 .thumbnail-wrapper {
     width: 100%;
     position: relative;
-    aspect-ratio: 16 / 9; /* Enforces clean cinematic video framing proportions */
+    aspect-ratio: 16 / 9;
     background-color: #1a1a1a;
-    border-radius: 12px; /* Smooth card corners */
+    border-radius: 12px;
     overflow: hidden;
     margin-bottom: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -916,34 +775,29 @@ bottom-dash {
 .project-thumbnail {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Centers and tracks your imagery cleanly inside the frame */
-    transition: border-radius 0.15s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Timestamp Duration Badge Overlay */
 .thumbnail-duration {
     position: absolute;
     bottom: 8px;
     right: 8px;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 3px 6px;
     font-family: monospace;
     font-size: 11px;
     font-weight: 500;
     border-radius: 4px;
-    letter-spacing: 0.5px;
 }
 
-/* 2. Metadata Architecture Row */
 .card-details-row {
     display: flex;
     gap: 12px;
     width: 100%;
     position: relative;
-    padding: 0 4px;
 }
-
 
 .meta-text-block {
     flex-grow: 1;
@@ -952,42 +806,88 @@ bottom-dash {
 }
 
 .yt-project-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 500;
     line-height: 1.4;
     color: #f1f1f1;
     margin-bottom: 6px;
-    /* Limit the text boundary height to 2 clean lines maximum */
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    line-clamp: 2; /* Standard property for compatibility */
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .channel-name {
     font-size: 0.85rem;
-    color: #aaa; /* Soft gray for tech tags */
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #aaa;
+    margin-bottom: 4px;
 }
 
 .video-stats {
     font-size: 0.85rem;
-    color: #717171; /* Subdued gray for view/date lines */
+    color: #717171;
 }
 
 .card-action-menu {
-    color: #aaa;
+    color: #717171;
     font-size: 1.1rem;
-    cursor: pointer;
-    padding: 0 4px;
-    opacity: 0; /* Keeps layout clean until active hover */
+    opacity: 0;
     transition: opacity 0.2s ease;
 }
 
+/* CARD SYSTEM HOVER HOOKS */
+.yt-project-card:hover {
+    transform: translateY(-4px);
+}
+
+.yt-project-card:hover .project-thumbnail {
+    transform: scale(1.03);
+}
+
+.yt-project-card:hover .card-action-menu {
+    opacity: 1;
+}
+
+.yt-project-card:hover .yt-project-title {
+    color: #fff;
+}
+
+/* ======================================================
+   RESPONSIVE LAYOUT MATRIX MEDIA QUERIES
+====================================================== */
+@media (max-width: 992px) {
+    .paper-detailed-workspace, .projects-deck-container {
+        padding: 100px 6vw 60px 6vw;
+    }
+    .abstract-text {
+        column-count: 1;
+        column-gap: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    #nav {
+        padding: 20px 6vw;
+    }
+    .youtube-style-grid {
+        grid-template-columns: 1fr;
+    }
+    .paper-main-title {
+        font-size: 3.5rem;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 /* --- THE PERFORMANCE HOVER VECTOR PHASES --- */
 
 .yt-project-card:hover .project-thumbnail {
@@ -1000,4 +900,186 @@ bottom-dash {
 
 .yt-project-card:hover .yt-project-title {
     color: #ffffff;
+}
+
+/* =========================================
+   LET'S TALK BUTTON
+========================================= */
+
+.magnetic-button {
+    display: inline-block;
+    padding: 14px 28px;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+    /* Prevent raw CSS transitions from fighting GSAP's physics engine */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.magnetic-button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.magnetic-text {
+    display: inline-block;
+    will-change: transform;
+}
+/* Increase specificity to override the global white link rules */
+.magnetic-button:hover,
+#main .magnetic-button:hover,
+#main .magnetic-button:hover .magnetic-text {
+    background-color: #fff !important;
+    color: #000000 !important;
+}
+
+/* =========================================
+   LET'S TALK PAGE
+========================================= */
+
+/* --- Let's Talk Workspace Frame Layout --- */
+.contact-workspace {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000;
+    color: #fff;
+    padding: 140px 10vw 80px 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-header {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.contact-subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    margin-top: 15px;
+}
+
+/* --- THE INPUT GROUP GRID HORIZON --- */
+#portfolio-form {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Uniform structural gaps to completely eliminate text collision */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+/* Label Typography Formatting Rule */
+.input-group label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #737272;
+    letter-spacing: 2px;
+    margin-bottom: 12px; /* Pulls label completely clear of the input boundary line */
+}
+
+.required-star {
+    color: #ff3333;
+    margin-left: 2px;
+}
+
+/* Minimal Line Inputs matching Cynthia Ugwu Style */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Clean bottom line boundary */
+    padding: 12px 4px;
+    font-size: 1.1rem;
+    color: #fff;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.4s ease;
+}
+
+/* Textarea Box Optimization */
+.input-group textarea {
+    resize: none; /* Prevents user from pulling your UI grid layout out of proportion */
+}
+
+/* Input Focus Glow Accent State */
+.input-group input:focus,
+.input-group textarea:focus {
+    border-bottom-color: #ffffff; /* Illuminates the wire line to pure white when active */
+}
+
+/* Placeholder Styling */
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: #333333; /* Subdued placeholder tone */
+    font-size: 1rem;
+}
+
+/* Center position container block for form submit */
+.form-submit-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.contact-footer-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 30px;
+    gap: 30px;
+    z-index: 10;
+    color: #fff;
+    background-color: black;
+}
+.social-links-horizon {
+    display: flex;
+    gap: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+}
+.social-anchor {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: relative;
+    padding: 4px;
+    color: #fff;
+    text-decoration: none;
+}
+.social-anchor::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.social-anchor:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }

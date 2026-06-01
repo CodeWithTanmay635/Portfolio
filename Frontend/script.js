@@ -1,302 +1,278 @@
 // ======================================================
-// LOCOMOTIVE SCROLL
+// CORE ENGINE INITIALIZATION
 // ======================================================
 
-const scroll = new LocomotiveScroll({
-    el: document.querySelector("#main"),
-    smooth: true
+let scrollContainer;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const mainWrapper = document.querySelector("#main");
+    
+    // Fail-safe init if Locomotive Target exists on current page
+    if (mainWrapper) {
+        scrollContainer = new LocomotiveScroll({
+            el: mainWrapper,
+            smooth: true
+        });
+    }
+
+    // Initialize modular feature modules securely
+    initLoaderAndEntrances();
+    initOptimizedMouseFollower();
+    initImageHoverMatrix();
 });
 
-// Force update after full page load
+// Force refresh computations across framework lifecycle hooks
 window.addEventListener("load", () => {
-    scroll.update();
+    if (scrollContainer) scrollContainer.update();
 });
 
-// Handle font loading layout shifts
 if (document.fonts) {
     document.fonts.ready.then(() => {
-        scroll.update();
+        if (scrollContainer) scrollContainer.update();
     });
 }
 
-//Paper Infograpgic 
-const infographic = document.querySelector("#paper-main-hero-img");
-if (infographic) {
-    infographic.addEventListener("load",() =>{
-        if (scroll) scroll.update();
-    }); 
+// Target internal asset structures dynamically
+const paperHeroImg = document.querySelector("#paper-main-hero-img");
+if (paperHeroImg) {
+    paperHeroImg.addEventListener("load", () => {
+        if (scrollContainer) scrollContainer.update();
+    });
 }
 
-// ======================================================
-// GLOBAL VARIABLES
-// ======================================================
-
-var timeout;
-
 
 // ======================================================
-// LOADING ANIMATION
+// LIFECYCLE ANIMATION INTERFACES
 // ======================================================
 
-function loadingAnimation() {
+function initLoaderAndEntrances() {
+    const loader = document.querySelector("#loader");
+    const loaderAnims = document.querySelectorAll(".loader-anim");
 
-    var tl = gsap.timeline();
+    // Fallback directly to page entrance if loader element isn't present on page
+    if (!loader) {
+        executeFirstPageEntrance();
+        return;
+    }
 
-    tl.from(".loader-anim", {
-        y: 150,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: "power4.out"
-    })
+    const tl = gsap.timeline();
 
-        .to(".loader-anim", {
+    if (loaderAnims.length > 0) {
+        tl.from(loaderAnims, {
+            y: 150,
+            stagger: 0.2,
+            duration: 0.8,
+            ease: "power4.out"
+        })
+        .to(loaderAnims, {
             opacity: 0,
             delay: 0.5,
             stagger: -0.1,
             duration: 0.5
-        })
-
-        .to("#loader", {
-    height: 0,
-    duration: 1,
-    ease: "expo.inOut",
-
-    onStart: function () {
-        firstPageAnim();
+        });
     }
-})
 
-            .call(function () {
-             firstPageAnim();
-             }, null, "-=1.2");
+    tl.to(loader, {
+        height: 0,
+        duration: 1,
+        ease: "expo.inOut",
+        onStart: () => {
+            executeFirstPageEntrance();
+        }
+    });
 }
 
-
-// ======================================================
-// FIRST PAGE ANIMATION
-// ======================================================
-
-function firstPageAnim() {
-
+function executeFirstPageEntrance() {
+    const boundingElements = document.querySelectorAll(".boundingelem");
+    const heroFooter = document.querySelector("#herofooter");
     const isMobile = window.innerWidth < 768;
 
-    gsap.to(".boundingelem", {
-        y: 0,
-        ease: "power1.out",
-        duration: isMobile ? 0.8 : 1,
-        stagger: isMobile ? 0.05 : 0.08
-    });
+    if (boundingElements.length > 0) {
+        gsap.to(boundingElements, {
+            y: 0,
+            ease: "power1.out",
+            duration: isMobile ? 0.8 : 1,
+            stagger: isMobile ? 0.05 : 0.08
+        });
+    }
 
-    gsap.from("#herofooter", {
-        y: 10,
-        opacity: 0,
-        duration: 0.1,
-        ease: "power2.out",
-
-        onComplete: function () {
-
-            gsap.set("#herofooter", {
-                clearProps: "all"
-            });
-
-            if (scroll) scroll.update();
-        }
-
-    });
-    
-
-}
-
-// ======================================================
-// MINI CIRCLE FOLLOWER
-// ======================================================
-
-function circleMouseFollower(xscale = 1, yscale = 1) {
-
-    window.addEventListener("mousemove", function (dets) {
-
-        document.querySelector("#minicircle").style.transform =
-            `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xscale}, ${yscale})`;
-
-    });
-}
-
-
-// ======================================================
-// MOUSE SQUEEZE EFFECT
-// ======================================================
-
-function mouseChaptaKaro() {
-
-    var xscale = 1;
-    var yscale = 1;
-
-    var xprev = 0;
-    var yprev = 0;
-
-    window.addEventListener("mousemove", function (dets) {
-
-        clearTimeout(timeout);
-
-        // Calculate velocity and clamp it
-        xscale = gsap.utils.clamp(.8, 1.2, dets.clientX - xprev);
-
-        yscale = gsap.utils.clamp(.8, 1.2, dets.clientY - yprev);
-
-        xprev = dets.clientX;
-        yprev = dets.clientY;
-
-        circleMouseFollower(xscale, yscale);
-
-        timeout = setTimeout(() => {
-
-            document.querySelector("#minicircle").style.transform =
-                `translate(${dets.clientX}px, ${dets.clientY}px) scale(1,1)`;
-
-        }, 100);
-
-    });
-
-
-    // Hide on mouse leave
-
-    document.addEventListener("mouseleave", function () {
-
-        gsap.to("#minicircle", {
-            scale: 0,
+    if (heroFooter) {
+        gsap.from(heroFooter, {
+            y: 10,
             opacity: 0,
-            duration: 0.3,
-            ease: "power2.out"
+            duration: 0.4,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.set(heroFooter, { clearProps: "all" });
+                if (scrollContainer) scrollContainer.update();
+            }
         });
-
-    });
-
-
-    // Show on mouse enter
-
-    document.addEventListener("mouseenter", function () {
-
-        gsap.to("#minicircle", {
-            scale: 1,
-            opacity: 1,
-            duration: 0.3,
-            ease: "power2.out"
-        });
-
-    });
+    }
 }
 
 
 // ======================================================
-// SMOOTH FOLLOWER
+// UNIFIED OPTIMIZED MOUSE TRACKING ENGINE
 // ======================================================
 
-function smoothFollower() {
-
+function initOptimizedMouseFollower() {
     const circle = document.querySelector("#minicircle");
+    if (!circle) return;
 
-    const xTo = gsap.quickTo(circle, "x", {
-        duration: 0.9,
-        ease: "power4"
-    });
+    // Use GSAP highly optimized quickTo pipelines for hardware acceleration
+    const xTo = gsap.quickTo(circle, "x", { duration: 0.3, ease: "power3.out" });
+    const yTo = gsap.quickTo(circle, "y", { duration: 0.3, ease: "power3.out" });
 
-    const yTo = gsap.quickTo(circle, "y", {
-        duration: 0.9,
-        ease: "power4"
-    });
+    let xPrev = 0;
+    let yPrev = 0;
+    let squashTimeout;
 
-    let xprev = 0;
-    let yprev = 0;
-
-
-    window.addEventListener("mousemove", function (dets) {
-
-        // Position update
-
+    window.addEventListener("mousemove", (dets) => {
+        // Run spatial positioning coordinates directly
         xTo(dets.clientX);
         yTo(dets.clientY);
 
+        // Track precise displacement velocities to calculate context squash
+        const xDiff = dets.clientX - xPrev;
+        const yDiff = dets.clientY - yPrev;
 
-        // Stretch effect
+        xPrev = dets.clientX;
+        yPrev = dets.clientY;
 
-        let xdiff = dets.clientX - xprev;
-        let ydiff = dets.clientY - yprev;
-
-        let xscale = gsap.utils.clamp(
-            0.8,
-            1.2,
-            1 + Math.abs(xdiff) * 0.01
-        );
-
-        let yscale = gsap.utils.clamp(
-            0.8,
-            1.2,
-            1 - Math.abs(ydiff) * 0.01
-        );
-
-        xprev = dets.clientX;
-        yprev = dets.clientY;
-
+        // Mathematical conversion mapping raw drag speed to physical distortion constraints
+        const speed = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+        const clampScaleX = gsap.utils.clamp(0.8, 1.2, 1 + speed * 0.005);
+        const clampScaleY = gsap.utils.clamp(0.8, 1.2, 1 - speed * 0.005);
 
         gsap.to(circle, {
-            scaleX: xscale,
-            scaleY: yscale,
+            scaleX: clampScaleX,
+            scaleY: clampScaleY,
             duration: 0.1,
-            ease: "power3"
+            ease: "power2.out"
         });
 
+        // Snap scaling structural defaults back to pure uniform shape when movement ceases
+        clearTimeout(squashTimeout);
+        squashTimeout = setTimeout(() => {
+            gsap.to(circle, {
+                scaleX: 1,
+                scaleY: 1,
+                duration: 0.2,
+                ease: "power2.out"
+            });
+        }, 60);
+    });
+
+    // Handle viewport visibility states smoothly
+    document.addEventListener("mouseleave", () => {
+        gsap.to(circle, { scale: 0, opacity: 0, duration: 0.3, ease: "power2.out" });
+    });
+
+    document.addEventListener("mouseenter", () => {
+        gsap.to(circle, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
     });
 }
 
 
 // ======================================================
-// IMAGE HOVER EFFECT
+// IMAGE HOVER INLINE DISPLACEMENT MATRIX
 // ======================================================
 
-document.querySelectorAll(".elem").forEach(function (elem) {
+function initImageHoverMatrix() {
+    const hoverElements = document.querySelectorAll(".elem");
+    if (hoverElements.length === 0) return;
 
-    var rotate = 0;
-    var diffrot = 0;
+    hoverElements.forEach((elem) => {
+        const targetImg = elem.querySelector("img");
+        if (!targetImg) return;
 
+        let lastX = 0;
+        let rotationDelta = 0;
 
-    elem.addEventListener("mouseleave", function () {
-
-        gsap.to(elem.querySelector("img"), {
-            opacity: 0,
-            ease: Power3
+        elem.addEventListener("mouseleave", () => {
+            gsap.to(targetImg, {
+                opacity: 0,
+                duration: 0.4,
+                ease: "power3.out"
+            });
         });
 
+        elem.addEventListener("mousemove", (dets) => {
+            // Compute vertical context distance from parent container card surface boundary line
+            const internalTopOffset = dets.clientY - elem.getBoundingClientRect().top;
+            
+            rotationDelta = dets.clientX - lastX;
+            lastX = dets.clientX;
+
+            gsap.to(targetImg, {
+                opacity: 1,
+                duration: 0.4,
+                ease: "power3.out",
+                top: internalTopOffset,
+                left: dets.clientX,
+                // Clamps rotation values neatly between -15 and 15 degrees max
+                rotation: gsap.utils.clamp(-15, 15, rotationDelta * 0.6)
+            });
+        });
     });
+}
 
+/* =========================================
+   LET'S TALK BUTTON
+========================================= */
+function initMagneticButtons() {
+    const magneticButtons = document.querySelectorAll(".magnetic-button");
+    
+    if (magneticButtons.length === 0) return;
 
-    elem.addEventListener("mousemove", function (dets) {
+    magneticButtons.forEach((btn) => {
+        const text = btn.querySelector(".magnetic-text");
 
-        var diff =
-            dets.clientY - elem.getBoundingClientRect().top;
+        btn.addEventListener("mousemove", (e) => {
+            // Get boundaries of the button element relative to viewport
+            const bound = btn.getBoundingClientRect();
+            
+            // Calculate the mouse position relative to the center of the button
+            const x = e.clientX - bound.left - bound.width / 2;
+            const y = e.clientY - bound.top - bound.height / 2;
 
-        diffrot = dets.clientX - rotate;
-        rotate = dets.clientX;
+            // Pull the outer button container toward the cursor (strength: 0.35)
+            gsap.to(btn, {
+                x: x * 0.35,
+                y: y * 0.35,
+                duration: 0.3,
+                ease: "power2.out"
+            });
 
-        gsap.to(elem.querySelector("img"), {
-            opacity: 1,
-            ease: Power3,
-            top: diff,
-            left: dets.clientX,
-            rotate: gsap.utils.clamp(-20, 20, diffrot * 0.5)
+            // Pull the inner text slightly less to create a parallax depth effect (strength: 0.2)
+            if (text) {
+                gsap.to(text, {
+                    x: x * 0.2,
+                    y: y * 0.2,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
         });
 
+        // Snap both elements seamlessly back to center position when mouse leaves boundary
+        btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.3)" // Gives it that organic, satisfying snap-back bounce
+            });
+
+            if (text) {
+                gsap.to(text, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            }
+        });
     });
+}
 
-});
-
-// ======================================================
-// FUNCTION CALLS
-// ======================================================
-
-loadingAnimation();
-
-circleMouseFollower();
-
-mouseChaptaKaro();
-
-smoothFollower();

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,36 +6,57 @@
     <link rel="stylesheet" href="loco.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
-    <title>Achievements</title>
+    <title>Achievements | Tanmay</title>
 </head>
 <body>
     <div id="minicircle"></div>
 
     <div id="main" data-scroll-container>
         
-        <nav id="nav">
-            <a href="index.html">Tanmay</a>
+        <!-- FIXED: Standardized nav layout to use id="nav" with header element for styling parity -->
+        <header id="nav" data-scroll-section>
+            <a href="index.html" class="nav-logo">Tanmay</a>
             <div class="nav-links">
                 <a href="paper-details.html">Papers</a>
-                <a href="project-details.html">Project</a>
+                <a href="project-details.html">Projects</a>
                 <a href="lets-talk.html">Contact</a>
-
             </div>
-        </nav>
-<section class="details-hero">
-    <div class="bounding">
-        <h1 class="boundingelem">Advanced Projects</h1>
-    </div>
-    
-    <div class="spec-grid">
-        <div class="spec-item"><h6>Language</h6><p>Java / C++</p></div>
-        <div class="spec-item"><h6>Architecture</h6><p>Object-Oriented (OOPs)</p></div>
-    </div>
-</section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
-    <script src="script.js"></script>
-        </div>
-</body>
+        </header>
 
+        <main class="projects-deck-container" data-scroll-section>
+            <div class="deck-header">
+                <div class="bounding">
+                    <h1 class="boundingelem page-main-title">Achievements</h1>
+                </div>
+                <hr class="header-divider">
+                <p class="deck-subtitle">
+                    A collection of accolades, recognitions, and milestones that highlight my journey and accomplishments in technology.
+                </p>
+            </div>
+
+            <div class="youtube-style-grid">
+                <a href="https://www.linkedin.com/posts/tanmay-pansare-5b402b33a_oasisinfobyte-oibsip-internship-share-7420079394422943744-ZVf0/" target="_blank" class="yt-project-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="/images/internship.jpg" alt="Oasis Infobyte Internship" class="project-thumbnail">
+                        <div class="thumbnail-duration">2025</div>
+                    </div>
+                    <div class="card-details-row">
+                        <div class="meta-text-block">
+                            <h3 class="yt-project-title">Oasis Infobyte Software Architecture Internship Completion</h3>
+                            <p class="channel-name">Gained hands-on experience in production software engineering methods.</p>
+                        </div>
+                        <div class="card-action-menu">⋮</div>
+                    </div>
+                <!-- FIXED: Wrapped anchor element closing securely right here -->
+                </a> 
+            </div>
+
+            <div class="meta-lable production-notice">More Milestones Processing In Queue...</div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>
