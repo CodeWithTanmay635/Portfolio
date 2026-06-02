@@ -275,19 +275,19 @@ function loadingAnimation() {
 
 | Document | Purpose |
 |----------|---------|
-| [ANIMATION_PHYSICS_DOCUMENTATION.md](./docs/ANIMATION_PHYSICS_DOCUMENTATION.md) | Complete physics reference and technical details |
-| [PHYSICS_QUICK_REFERENCE.md](./docs/PHYSICS_QUICK_REFERENCE.md) | Visual diagrams and quick lookup tables |
-| [DETAILED_CODE_WALKTHROUGH.md](./docs/DETAILED_CODE_WALKTHROUGH.md) | Line-by-line annotated code explanation |
-| [API_REFERENCE.md](./docs/API_REFERENCE.md) | Function signatures and parameters |
+| [ANIMATION_PHYSICS_DOCUMENTATION.md](./Documentation/ANIMATION_PHYSICS_DOCUMENTATION.md) | Complete physics reference and technical details |
+| [PHYSICS_QUICK_REFERENCE.md](./Documentation/PHYSICS_QUICK_REFERENCE.md) | Visual diagrams and quick lookup tables |
+| [DETAILED_CODE_WALKTHROUGH.md](./Documentation/DETAILED_CODE_WALKTHROUGH.md) | Line-by-line annotated code explanation |
+| [API_REFERENCE.md](./Documentation/API_REFERENCE.md) | Function signatures and parameters |
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | Guidelines for contributors |
 
 ### Quick Links
 
-- **[Installation Guide](./docs/INSTALLATION.md)** - Detailed setup instructions
-- **[API Reference](./docs/API_REFERENCE.md)** - All functions and parameters
-- **[Physics Guide](./docs/PHYSICS_GUIDE.md)** - Deep dive into physics implementations
-- **[Examples](./examples/)** - Working code examples
-- **[FAQ](./docs/FAQ.md)** - Common questions and answers
+- **[Installation Guide](./Documentation/INSTALLATION.md)** - Detailed setup instructions
+- **[API Reference](./Documentation/API_REFERENCE.md)** - All functions and parameters
+- **[Physics Guide](./Documentation/PHYSICS_GUIDE.md)** - Deep dive into physics implementations
+
+- **[FAQ](./Documentation/FAQ.md)** - Common questions and answers
 
 ---
 
