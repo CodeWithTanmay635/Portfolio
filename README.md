@@ -50,7 +50,7 @@
 ## 🎬 Demo
 
 ### Deployed 
-- [Portfolio Website](https://tan-may.dev) - Full system in action
+- [Portfolio Website](https://tan-may.dev) - Full system in action (for now open link on laptop or PC)
 
 ### Quick Visual Overview
 
