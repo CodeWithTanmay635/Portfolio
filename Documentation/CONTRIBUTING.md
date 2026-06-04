@@ -367,9 +367,9 @@ How should it work?
 ## Questions?
 
 - Check [README.md](./README.md)
-- Check [documentation](./docs)
+- Check [documentation](./Documentation)
 - Create a GitHub issue
-- Email: your.email@example.com
+- Email: tanmaypansare708@outlook.com
 
 ---
 
