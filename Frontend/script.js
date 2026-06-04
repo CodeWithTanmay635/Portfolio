@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Fail-safe init if Locomotive Target exists on current page
     if (mainWrapper) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
         scrollContainer = new LocomotiveScroll({
             el: mainWrapper,
-            smooth: true
+            smooth: !isTouchDevice && !reduceMotion
         });
     }
 
@@ -48,9 +51,17 @@ if (paperHeroImg) {
 function initLoaderAndEntrances() {
     const loader = document.querySelector("#loader");
     const loaderAnims = document.querySelectorAll(".loader-anim");
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // Fallback directly to page entrance if loader element isn't present on page
     if (!loader) {
+        executeFirstPageEntrance();
+        return;
+    }
+
+    if (reduceMotion) {
+        gsap.set(loader, { display: "none" });
         executeFirstPageEntrance();
         return;
     }
@@ -59,25 +70,29 @@ function initLoaderAndEntrances() {
 
     if (loaderAnims.length > 0) {
         tl.from(loaderAnims, {
-            y: 150,
-            stagger: 0.2,
-            duration: 0.8,
+            y: isMobile ? 70 : 150,
+            stagger: isMobile ? 0.1 : 0.2,
+            duration: isMobile ? 0.45 : 0.8,
             ease: "power4.out"
         })
         .to(loaderAnims, {
             opacity: 0,
-            delay: 0.5,
-            stagger: -0.1,
-            duration: 0.5
+            delay: isMobile ? 0.15 : 0.5,
+            stagger: isMobile ? -0.04 : -0.1,
+            duration: isMobile ? 0.25 : 0.5
         });
     }
 
     tl.to(loader, {
         height: 0,
-        duration: 1,
+        duration: isMobile ? 0.55 : 1,
         ease: "expo.inOut",
         onStart: () => {
             executeFirstPageEntrance();
+        },
+        onComplete: () => {
+            gsap.set(loader, { display: "none" });
+            if (scrollContainer) scrollContainer.update();
         }
     });
 }
@@ -118,6 +133,12 @@ function executeFirstPageEntrance() {
 function initOptimizedMouseFollower() {
     const circle = document.querySelector("#minicircle");
     if (!circle) return;
+
+    const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (isTouchDevice) {
+        circle.style.display = "none";
+        return;
+    }
 
     // Use GSAP highly optimized quickTo pipelines for hardware acceleration
     const xTo = gsap.quickTo(circle, "x", { duration: 0.3, ease: "power3.out" });
@@ -181,6 +202,9 @@ function initOptimizedMouseFollower() {
 function initImageHoverMatrix() {
     const hoverElements = document.querySelectorAll(".elem");
     if (hoverElements.length === 0) return;
+
+    const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (isTouchDevice) return;
 
     hoverElements.forEach((elem) => {
         const targetImg = elem.querySelector("img");
