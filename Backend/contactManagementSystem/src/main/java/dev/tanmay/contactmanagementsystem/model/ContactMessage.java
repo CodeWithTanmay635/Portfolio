@@ -1,11 +1,20 @@
 package dev.tanmay.contactmanagementsystem.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "contact_message")
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ContactMessage {
 
     @Id
@@ -33,4 +42,5 @@ public class ContactMessage {
         this.status = MessageStatus.NEW;
         this.createdAt = LocalDateTime.now();
     }
+
 }
