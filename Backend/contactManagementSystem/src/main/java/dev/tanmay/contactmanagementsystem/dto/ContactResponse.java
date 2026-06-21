@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContactResponse {
-    private String id;
-    private String name;
+    private long id;
     private String message;
     private MessageStatus status;
     private LocalDateTime createdAt;

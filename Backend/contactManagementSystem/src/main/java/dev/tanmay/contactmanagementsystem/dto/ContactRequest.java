@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ContactRequest {
 
     @NotBlank(message = "Name is required")
-    @Size(max = 100, message = "Name too long")
+    @Size(min = 2, max = 100, message = "Name too long")
     private String name;
 
     @NotBlank(message = "Email is required")
