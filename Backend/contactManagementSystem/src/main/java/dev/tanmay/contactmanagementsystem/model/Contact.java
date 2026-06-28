@@ -34,6 +34,7 @@ import java.util.UUID;
 @Builder
 @ToString(exclude = {"message"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuppressWarnings("JpaDataSourceORMInspection")
 public class Contact {
 
         @Id
