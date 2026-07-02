@@ -16,11 +16,11 @@ public class ContactRequest {
 
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 100, message = "Name too long")
-    private String name;
+    String name;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Enter valid Email address")
-    private String email;
+    String email;
 
     @NotBlank(message = "Message cannot be empty")
     @Size(min = 10, max = 2000, message = "Message must be between 10 and 2000 characters")
