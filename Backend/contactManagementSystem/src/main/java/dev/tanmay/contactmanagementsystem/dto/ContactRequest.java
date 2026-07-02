@@ -14,6 +14,7 @@ public record ContactRequest(
 
         @NotBlank(message = "Email required")
         @Email(message = "Enter Valid Message")
+        @Size(max = 255)
         String email,
 
         @NotBlank(message = "Message required")
