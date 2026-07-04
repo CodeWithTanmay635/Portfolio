@@ -2,7 +2,6 @@ package dev.tanmay.contactmanagementsystem.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,7 +14,7 @@ public enum MessagePriority{
     private final int minScore;
     private final String sal;
 
-    public static MessagePriority fromSorce(int score){
+    public static MessagePriority fromScore(int score){
         if(score >= CRITICAL.minScore) return CRITICAL;
         if(score >= HIGH.minScore) return HIGH;
         if(score >= MEDIUM.minScore) return MEDIUM;
