@@ -1,4 +1,4 @@
-package dev.tanmay.contactmanagementsystem.dto;
+package dev.tanmay.contactmanagementsystem.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
