@@ -1,9 +1,10 @@
 package dev.tanmay.contactmanagementsystem.dto;
 
-import dev.tanmay.contactmanagementsystem.model.MessageStatus;
+import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -11,8 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class ContactResponse {
-    private long id;
+    private UUID id;
     private String message;
     private MessageStatus status;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 }
