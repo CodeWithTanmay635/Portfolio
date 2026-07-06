@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder
-public record ContactRequest(
+public record ContactRequestDTO(
 
         @NotBlank(message = "Name required")
         @Size(min = 2, max = 100, message = "Name 2-100 chars")

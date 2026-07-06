@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ContactResponse {
+public class ContactResponseDTO {
     private UUID id;
     private String message;
     private MessageStatus status;
