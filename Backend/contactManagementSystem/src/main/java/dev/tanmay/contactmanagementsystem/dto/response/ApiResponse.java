@@ -32,6 +32,7 @@ public record ApiResponse<T>(
         return ApiResponse.<T>builder()
                 .success(false)
                 .message(message)
+                .timeStamp(Instant.now())
                 .build();
     }
 }
