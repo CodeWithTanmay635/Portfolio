@@ -10,7 +10,7 @@ public record PublicContactResponseDTO(
         Instant receivedAt
 ) {
 
-    public  static public  PublicContactResponseDTO of(UUID id, Instant receivedAt){
+    public  static  PublicContactResponseDTO of(UUID id, Instant receivedAt){
         return new PublicContactResponseDTO(
                 id,
                 "Message receive. Will response shortly",
