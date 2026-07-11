@@ -1,4 +1,12 @@
 package dev.tanmay.contactmanagementsystem.dto.response;
 
-public record PublicContactResponseDTO() {
+import java.time.Instant;
+import java.util.UUID;
+
+public record PublicContactResponseDTO(
+
+        UUID id,
+        String confirmationMessage,
+        Instant receivedAt
+) {
 }
