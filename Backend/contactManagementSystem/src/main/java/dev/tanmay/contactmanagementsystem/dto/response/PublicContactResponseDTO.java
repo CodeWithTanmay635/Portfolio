@@ -9,4 +9,12 @@ public record PublicContactResponseDTO(
         String confirmationMessage,
         Instant receivedAt
 ) {
+
+    public  static public  PublicContactResponseDTO of(UUID id, Instant receivedAt){
+        return new PublicContactResponseDTO(
+                id,
+                "Message receive. Will response shortly",
+                receivedAt
+        );
+    }
 }
