@@ -62,6 +62,10 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             MessageStatus status
     );
 
+    long countByClientIdAndPriority(
+            String clientId,
+            MessagePriority priority
+    );
 }
 
 
