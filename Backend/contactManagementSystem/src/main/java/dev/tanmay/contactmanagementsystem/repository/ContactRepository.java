@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.awt.print.Pageable;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,6 +40,13 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             String clientId,
             MessageStatus status,
             MessagePriority priority,
+            Pageable pageable
+    );
+
+    Page<Contact> findByClientIdAndCreatedAtBetween(
+            String clientId,
+            Instant from,
+            Instant to,
             Pageable pageable
     );
 }
