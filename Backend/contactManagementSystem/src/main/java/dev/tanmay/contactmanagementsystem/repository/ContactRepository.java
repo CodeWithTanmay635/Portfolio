@@ -1,6 +1,7 @@
 package dev.tanmay.contactmanagementsystem.repository;
 
 import dev.tanmay.contactmanagementsystem.model.Contact;
+import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,6 +28,14 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             String clientId,
             Pageable pageable
     );
+
+    Page<Contact> findByClientIdAndPriority(
+            String clientId,
+            MessagePriority priority,
+            Pageable pageable
+    );
+
+
 }
 
 
