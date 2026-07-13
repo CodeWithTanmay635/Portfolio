@@ -54,6 +54,14 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             String clientId,
             String email
     );
+
+    long countByClientId(String clientId);
+
+    long countByClientIdAndStatus(
+            String clientId,
+            MessageStatus status
+    );
+
 }
 
 
