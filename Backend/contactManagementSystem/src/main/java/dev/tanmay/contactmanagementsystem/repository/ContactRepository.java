@@ -36,7 +36,10 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
     );
 
     Page<Contact> findByClientIdStatusAndPriority(
-
+            String clientId,
+            MessageStatus status,
+            MessagePriority priority,
+            Pageable pageable
     );
 }
 
