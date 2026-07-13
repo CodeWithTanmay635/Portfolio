@@ -18,10 +18,10 @@ import java.util.UUID;
 public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpecificationExecutor<Contact> {
     //Spring reads these methods and builds
     //SELECT * FROM contact_message WHERE status = ?
-    List<Contact> findByStatus(MessageStatus status);
-
-    //SELECT * FROM contact_message ORDER BY created_at DESC
-    List<Contact> findAllByOrderByCreatedAtDesc();
+//    List<Contact> findByStatus(MessageStatus status);
+//
+//    //SELECT * FROM contact_message ORDER BY created_at DESC
+//    List<Contact> findAllByOrderByCreatedAtDesc();
 
     Optional<Contact> findByIdAndClientId(UUID uuid, String clientId);
 
@@ -48,6 +48,11 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             Instant from,
             Instant to,
             Pageable pageable
+    );
+
+    List<Contact> findByClientIdAndEmail(
+            String clientId,
+            String email
     );
 }
 
