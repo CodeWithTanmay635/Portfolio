@@ -36,7 +36,7 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
             Pageable pageable
     );
 
-    Page<Contact> findByClientIdStatusAndPriority(
+    Page<Contact> findByClientIdAndStatusAndPriority(
             String clientId,
             MessageStatus status,
             MessagePriority priority,
@@ -64,6 +64,12 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
 
     long countByClientIdAndPriority(
             String clientId,
+            MessagePriority priority
+    );
+
+    List<Contact> findByClientIdAndStatusAndPriority(
+            String clientId,
+            MessageStatus status,
             MessagePriority priority
     );
 }
