@@ -30,4 +30,8 @@ public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
             Instant to,
             Pageable pageable
     );
+
+    Page<AuditLog> findByContactId(UUID contact);
+
+    long countByContactId(UUID contact);
 }
