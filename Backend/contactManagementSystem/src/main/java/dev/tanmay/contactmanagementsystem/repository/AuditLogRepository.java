@@ -1,10 +1,14 @@
 package dev.tanmay.contactmanagementsystem.repository;
 
-import dev.tanmay.contactmanagementsystem.model.Contact;
+import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface AuditLogRepository extends JpaRepository<Contact,Long> {
+import java.util.List;
 
+@Repository
+public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
+
+
+    List<AuditLog>
 }
