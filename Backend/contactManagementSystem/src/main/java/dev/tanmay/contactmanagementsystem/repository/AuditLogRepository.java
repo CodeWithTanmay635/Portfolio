@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,5 +25,9 @@ public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
             String newStatus
     );
 
-
+    Page<AuditLog> findByChangedAtBetween(
+            Instant from,
+            Instant to,
+            Pageable pageable
+    );
 }
