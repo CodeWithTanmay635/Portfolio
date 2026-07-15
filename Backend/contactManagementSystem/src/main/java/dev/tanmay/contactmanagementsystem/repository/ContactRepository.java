@@ -23,56 +23,49 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
 //    //SELECT * FROM contact_message ORDER BY created_at DESC
 //    List<Contact> findAllByOrderByCreatedAtDesc();
 
-    Optional<Contact> findByIdAndClientId(UUID uuid, String clientId);
 
-    Page<Contact> findByClientId(
-            String clientId,
-            Pageable pageable
-    );
 
-    Page<Contact> findByClientIdAndPriority(
-            String clientId,
-            MessagePriority priority,
-            Pageable pageable
-    );
+        // Admin filters
 
-    Page<Contact> findByClientIdAndStatusAndPriority(
-            String clientId,
-            MessageStatus status,
-            MessagePriority priority,
-            Pageable pageable
-    );
+        Page<Contact> findByStatus(
+                MessageStatus status,
+                Pageable pageable
+        );
 
-    Page<Contact> findByClientIdAndCreatedAtBetween(
-            String clientId,
-            Instant from,
-            Instant to,
-            Pageable pageable
-    );
+        Page<Contact> findByPriority(
+                MessagePriority priority,
+                Pageable pageable
+        );
 
-    List<Contact> findByClientIdAndEmail(
-            String clientId,
-            String email
-    );
+        Page<Contact> findByStatusAndPriority(
+                MessageStatus status,
+                MessagePriority priority,
+                Pageable pageable
+        );
 
-    long countByClientId(String clientId);
+        // Search
 
-    long countByClientIdAndStatus(
-            String clientId,
-            MessageStatus status
-    );
+        List<Contact> findByEmail(String email);
 
-    long countByClientIdAndPriority(
-            String clientId,
-            MessagePriority priority
-    );
+        List<Contact> findByNameContainingIgnoreCase(String name);
 
-    List<Contact> findByClientIdAndStatusAndPriority(
-            String clientId,
-            MessageStatus status,
-            MessagePriority priority
-    );
-}
+        Optional<Contact> findByReferenceId(String referenceId);
+
+        // Dashboard statistics
+
+        long countByStatus(MessageStatus status);
+
+        long countByPriority(MessagePriority priority);
+
+        // Date filtering
+
+        Page<Contact> findByCreatedAtBetween(
+                Instant from,
+                Instant to,
+                Pageable pageable
+        );
+    }
+
 
 
 
