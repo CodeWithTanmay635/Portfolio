@@ -13,25 +13,8 @@ import java.util.UUID;
 @Repository
 public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
 
+ List<AuditLog> findAllByContactIdOrderedByChangedAtAsc(UUID ContactId);
+ List<AuditLog> findAllByContactIdOrderedByChangedAtDesc(UUID ContactId);
 
-    List<AuditLog> findByContactIdOrderByChangedAtDesc(UUID contactId);
 
-    Page<AuditLog> findByContactId(UUID contactId, Pageable pageable);
-
-    Page<AuditLog> findByChangeBy(String changedBy, Pageable pageable);
-
-    List<AuditLog> findByContactIdAndNewStatus(
-            UUID contactId,
-            String newStatus
-    );
-
-    Page<AuditLog> findByChangedAtBetween(
-            Instant from,
-            Instant to,
-            Pageable pageable
-    );
-
-    Page<AuditLog> findByContactId(UUID contact);
-
-    long countByContactId(UUID contact);
 }
