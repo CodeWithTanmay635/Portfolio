@@ -16,5 +16,8 @@ public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
  List<AuditLog> findAllByContactIdOrderedByChangedAtAsc(UUID ContactId);
  List<AuditLog> findAllByContactIdOrderedByChangedAtDesc(UUID ContactId);
 
-
+    List<AuditLog> findByChangedAtBetween(
+            Instant from,
+            Instant to
+    );
 }
