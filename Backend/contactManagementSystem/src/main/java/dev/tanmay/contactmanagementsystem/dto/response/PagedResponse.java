@@ -24,7 +24,7 @@ public record PagedResponse<T>(
 
                 page.getContent(),
 
-                page.getTotalPages(),
+                page.getNumber(),
 
                 page.getSize(),
 
