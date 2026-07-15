@@ -19,5 +19,22 @@ public record PagedResponse<T>(
 
         boolean last
 ){
+    public  static <T> PagedResponse<T> form(Page<T> page){
+        return new  PagedResponse<T>(
 
+                page.getContent(),
+
+                page.getTotalPages(),
+
+                page.getSize(),
+
+                page.getTotalElements(),
+
+                page.getTotalPages(),
+
+                page.isFirst(),
+
+                page.isLast()
+        );
+    }
 }
