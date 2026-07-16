@@ -1,16 +1,7 @@
 package dev.tanmay.contactmanagementsystem.service;
-
-
-import dev.tanmay.contactmanagementsystem.dto.ContactRequest;
-import dev.tanmay.contactmanagementsystem.dto.ContactResponse;
-import dev.tanmay.contactmanagementsystem.exception.MessageNotFoundException;
-import dev.tanmay.contactmanagementsystem.model.ContactMessage;
-import dev.tanmay.contactmanagementsystem.model.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ContactService {
@@ -23,91 +14,6 @@ public class ContactService {
         this.contactRepository = contactRepository;
         this.emailService = emailService;
     }
-
-
-    public ContactResponse submitContact(ContactRequest request) {
-        ContactMessage message = toEntity(request);
-        ContactMessage saved = contactRepository.save(message);
-
-        emailService.sendNewMessageNotification(
-                saved.getName(),
-                saved.getEmail(),
-                saved.getMessage()
-        );
-
-        return toResponse(saved);
-    }
-
-
-    // Admin: get all messages, newest first
-    public List<ContactResponse> getAllMessages() {
-        return contactRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    // Admin: filter by status
-    public List<ContactResponse> getMessagesByStatus(MessageStatus status) {
-        return contactRepository.findByStatus(status)
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    // Admin: mark as read
-    public ContactResponse markAsRead(Long id) {
-        ContactMessage message = getMessageOrThrow(id);
-        message.setStatus(MessageStatus.READ);
-        return toResponse(contactRepository.save(message)); // @PreUpdate fires here
-    }
-
-    // Admin: archive
-    public ContactResponse archive(Long id) {
-        ContactMessage message = getMessageOrThrow(id);
-        message.setStatus(MessageStatus.ARCHIVED);
-        return toResponse(contactRepository.save(message));
-    }
-
-    // Admin: mark as replied
-    public ContactResponse markAsReplied(Long id) {
-        ContactMessage message = getMessageOrThrow(id);
-        message.setStatus(MessageStatus.REPLIED);
-        return toResponse(contactRepository.save(message));
-    }
-
-    // Admin: delete
-    public void delete(Long id) {
-        getMessageOrThrow(id); // ensures it exists before deleting, gives a clean 404 instead of silent no-op
-        contactRepository.deleteById(id);
-    }
-
-    // ----- Helpers -----
-
-    private ContactMessage getMessageOrThrow(Long id) {
-        return contactRepository.findById(id)
-                .orElseThrow(() -> new MessageNotFoundException(id));
-    }
-
-    private ContactMessage toEntity(ContactRequest request) {
-        ContactMessage message = new ContactMessage();
-        message.setName(request.getName());
-        message.setEmail(request.getEmail());
-        message.setMessage(request.getMessage());
-        return message;
-        // status, createdAt, updatedAt are NOT set here — @PrePersist owns that
-    }
-
-    private ContactResponse toResponse(ContactMessage entity) {
-        return new ContactResponse(
-                entity.getId(),
-                entity.getMessage(),
-                entity.getStatus(),
-                entity.getCreatedAt()
-        );
-    }
-
-
 }
 
 //Constructor injection for ContactRepository — same DI pattern you already know.
