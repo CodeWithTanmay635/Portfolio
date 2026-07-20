@@ -20,6 +20,9 @@ public class ContactService {
 
     @Transactional
     public ContactResponseDTO save(ContactRequestDTO contactRequestDTO) {
-
+        // save contact
+        // save audit log
+        // both commit together
+        // one fails → both rollback
     }
 }
