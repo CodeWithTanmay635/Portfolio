@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
@@ -78,10 +79,19 @@ public class ContactService {
                 new ContactReceivedEvent(this, saved)
         );
 
-        return ContactResponseDTO.form(saved);
+        return ContactResponseDTO.from(saved);
         // save contact
         // save audit log
         // both commit together
         // one fails → both rollback
+    }
+
+    private ContactResponseDTO buildFakeResponse(){
+        return ContactResponseDTO.from(
+                Contact.builder()
+                        .id(UUID.randomUUID())
+                        .createdAt(Instant.now())
+                        .build()
+        );
     }
 }
