@@ -1,8 +1,10 @@
 package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
+import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +22,13 @@ import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 public class ContactService {
     private final ContactRepository contactRepository;
     private final EmailService emailService;
+    private final AuditLogRepository auditLogRepository;
 
     @Autowired
-    public ContactService(ContactRepository contactRepository, EmailService emailService) {
+    public ContactService(ContactRepository contactRepository, EmailService emailService, AuditLogRepository auditLogRepository) {
         this.contactRepository = contactRepository;
         this.emailService = emailService;
+        this.auditLogRepository = auditLogRepository;
     }
 
     @Transactional
@@ -56,6 +60,18 @@ public class ContactService {
         int score = priorityEsimatorService.claculateScore(dto);
         contact.setPriority(MessagePriority.fromScore(score));
         contact.setPriorityScore(score);
+
+        Contact saved = contactRepository.save(contact);
+
+        auditLogRepository.save(AuditLog.of(
+                saved.getId(),
+                null,
+                MessageStatus.NEW,
+                "SYSTEM",
+                "Initial submission"
+        ));
+
+
         // save contact
         // save audit log
         // both commit together
