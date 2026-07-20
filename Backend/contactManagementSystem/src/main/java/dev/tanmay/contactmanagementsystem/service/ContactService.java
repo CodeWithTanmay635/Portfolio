@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 
 @Slf4j
 @Service
@@ -27,6 +30,16 @@ public class ContactService {
             //return fake success - bot thinks it worked
             log.warn("Bot submission detected");
             return buildFakeResponse();
+        }
+
+        boolean isDuplicate = contactRepository
+                .existsByEmailAndCreatedAfter(
+                        dto.email(),
+                        Instant.now().minus(10, ChronoUnit.MINUTES)
+                );
+        if(isDuplicate){
+            throw new DuplicateContactException(dto.email());
+
         }
         // save contact
         // save audit log
