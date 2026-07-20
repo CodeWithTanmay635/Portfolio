@@ -9,6 +9,7 @@ import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,12 +24,14 @@ public class ContactService {
     private final ContactRepository contactRepository;
     private final EmailService emailService;
     private final AuditLogRepository auditLogRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public ContactService(ContactRepository contactRepository, EmailService emailService, AuditLogRepository auditLogRepository) {
+    public ContactService(ContactRepository contactRepository, EmailService emailService, AuditLogRepository auditLogRepository, ApplicationEventPublisher applicationEventPublisher) {
         this.contactRepository = contactRepository;
         this.emailService = emailService;
         this.auditLogRepository = auditLogRepository;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Transactional
@@ -71,7 +74,11 @@ public class ContactService {
                 "Initial submission"
         ));
 
+        eventPublisher.publishEvent(
+                new ContactReceivedEvent(this, saved)
+        );
 
+        return ContactResponseDTO.form(saved);
         // save contact
         // save audit log
         // both commit together
