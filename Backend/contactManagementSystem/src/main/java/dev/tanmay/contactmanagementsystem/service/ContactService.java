@@ -2,6 +2,7 @@ package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.model.Contact;
+import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,10 @@ public class ContactService {
                 .message(dto.message().trim())
                 .userAgent(userAgent)
                 .build();
+
+        int score = priorityEsimatorService.claculateScore(dto);
+        contact.setPriority(MessagePriority.fromScore(score));
+        contact.setPriorityScore(score);
         // save contact
         // save audit log
         // both commit together
