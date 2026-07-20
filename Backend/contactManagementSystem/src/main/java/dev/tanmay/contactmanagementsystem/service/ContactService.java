@@ -16,7 +16,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 
 @Slf4j
@@ -26,6 +25,7 @@ public class ContactService {
     private final EmailService emailService;
     private final AuditLogRepository auditLogRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
+
 
     @Autowired
     public ContactService(ContactRepository contactRepository, EmailService emailService, AuditLogRepository auditLogRepository, ApplicationEventPublisher applicationEventPublisher) {
@@ -45,12 +45,12 @@ public class ContactService {
         }
 
         boolean isDuplicate = contactRepository
-                .existsByEmailAndCreatedAfter(
+                .existsByEmailAndCreatedAtAfter(
                         dto.email(),
                         Instant.now().minus(10, ChronoUnit.MINUTES)
                 );
         if(isDuplicate){
-            throw new DuplicateContactException(dto.email());
+            //throw new DuplicateContactException(dto.email());
 
         }
 
@@ -58,28 +58,28 @@ public class ContactService {
                 .name(dto.name().trim())
                 .email(dto.email().toLowerCase().trim())
                 .message(dto.message().trim())
-                .userAgent(userAgent)
+               // .userAgent(userAgent)
                 .build();
 
-        int score = priorityEsimatorService.claculateScore(dto);
-        contact.setPriority(MessagePriority.fromScore(score));
-        contact.setPriorityScore(score);
+//        //int score = priorityEsimatorService.claculateScore(dto);
+//        contact.setPriority(MessagePriority.fromScore(score));
+//        contact.setPriorityScore(score);
+//
+//        Contact saved = contactRepository.save(contact);
+//
+//        auditLogRepository.save(AuditLog.of(
+//                saved.getId(),
+//                null,
+//                MessageStatus.NEW,
+//                "SYSTEM",
+//                "Initial submission"
+//        ));
+//
+//        eventPublisher.publishEvent(
+//                new ContactReceivedEvent(this, saved)
+//        );
 
-        Contact saved = contactRepository.save(contact);
-
-        auditLogRepository.save(AuditLog.of(
-                saved.getId(),
-                null,
-                MessageStatus.NEW,
-                "SYSTEM",
-                "Initial submission"
-        ));
-
-        eventPublisher.publishEvent(
-                new ContactReceivedEvent(this, saved)
-        );
-
-        return ContactResponseDTO.from(saved);
+        return ContactResponseDTO.from(contact);
         // save contact
         // save audit log
         // both commit together
