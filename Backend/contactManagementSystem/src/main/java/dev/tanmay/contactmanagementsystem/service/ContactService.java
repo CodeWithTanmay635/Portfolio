@@ -1,5 +1,8 @@
 package dev.tanmay.contactmanagementsystem.service;
+import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
+import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +16,10 @@ public class ContactService {
     public ContactService(ContactRepository contactRepository, EmailService emailService) {
         this.contactRepository = contactRepository;
         this.emailService = emailService;
+    }
+
+    @Transactional
+    public ContactResponseDTO save(ContactRequestDTO contactRequestDTO) {
+
     }
 }
