@@ -54,7 +54,7 @@ public class ContactService {
 
         }
 
-        Contact contact = new Contact.builder()
+        Contact contact = Contact.builder()
                 .name(dto.name().trim())
                 .email(dto.email().toLowerCase().trim())
                 .message(dto.message().trim())
