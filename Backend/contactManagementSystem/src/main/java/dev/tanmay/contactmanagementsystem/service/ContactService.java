@@ -1,6 +1,7 @@
 package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
+import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 
 @Slf4j
@@ -41,6 +44,13 @@ public class ContactService {
             throw new DuplicateContactException(dto.email());
 
         }
+
+        Contact contact = new Contact.builder()
+                .name(dto.name().trim())
+                .email(dto.email().toLowerCase().trim())
+                .message(dto.message().trim())
+                .userAgent(userAgent)
+                .build();
         // save contact
         // save audit log
         // both commit together
