@@ -1,6 +1,7 @@
 package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.exception.DuplicateContactException;
 import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
@@ -50,7 +51,7 @@ public class ContactService {
                         Instant.now().minus(10, ChronoUnit.MINUTES)
                 );
         if(isDuplicate){
-            //throw new DuplicateContactException(dto.email());
+            throw new DuplicateContactException(dto.email());
 
         }
 
