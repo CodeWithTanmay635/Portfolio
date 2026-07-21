@@ -6,6 +6,7 @@ import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
+import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +18,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 
-
 @Slf4j
 @Service
 public class ContactService {
+
     private final ContactRepository contactRepository;
-    private final EmailService emailService;
     private final AuditLogRepository auditLogRepository;
+    private final PriorityEstimatorService priorityEstimatorService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-
     @Autowired
-    public ContactService(ContactRepository contactRepository, EmailService emailService, AuditLogRepository auditLogRepository, ApplicationEventPublisher applicationEventPublisher) {
+    public  ContactService(ContactRepository contactRepository, AuditLogRepository auditLogRepository,  PriorityEstimatorService priorityEstimatorService, ApplicationEventPublisher applicationEventPublisher) {
         this.contactRepository = contactRepository;
-        this.emailService = emailService;
         this.auditLogRepository = auditLogRepository;
+        this.priorityEstimatorService = priorityEstimatorService;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -58,32 +58,28 @@ public class ContactService {
                 .name(dto.name().trim())
                 .email(dto.email().toLowerCase().trim())
                 .message(dto.message().trim())
-               // .userAgent(userAgent)
+               //.userAgent(userAgent)
                 .build();
 
-//        //int score = priorityEsimatorService.claculateScore(dto);
-//        contact.setPriority(MessagePriority.fromScore(score));
-//        contact.setPriorityScore(score);
-//
-//        Contact saved = contactRepository.save(contact);
-//
-//        auditLogRepository.save(AuditLog.of(
-//                saved.getId(),
-//                null,
-//                MessageStatus.NEW,
-//                "SYSTEM",
-//                "Initial submission"
-//        ));
-//
-//        eventPublisher.publishEvent(
-//                new ContactReceivedEvent(this, saved)
-//        );
+        int score = priorityEstimatorService.calculateScore(dto);
+        contact.setPriority(MessagePriority.fromScore(score));
+        contact.setPriorityScore(score);
+
+        Contact saved = contactRepository.save(contact);
+
+        auditLogRepository.save(AuditLog.of(
+                saved.getId(),
+                null,
+                MessageStatus.NEW,
+                "SYSTEM",
+                "Initial submission"
+        ));
+
+        applicationEventPublisher.publishEvent(
+                new ContactReceivedEvent(this, saved)
+        );
 
         return ContactResponseDTO.from(contact);
-        // save contact
-        // save audit log
-        // both commit together
-        // one fails → both rollback
     }
 
     private ContactResponseDTO buildFakeResponse(){
