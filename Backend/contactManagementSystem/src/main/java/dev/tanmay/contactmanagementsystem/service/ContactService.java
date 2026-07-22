@@ -84,11 +84,10 @@ public class ContactService {
     }
 
     private ContactResponseDTO buildFakeResponse(){
-        return ContactResponseDTO.from(
-                Contact.builder()
-                        .id(UUID.randomUUID())
-                        .createdAt(Instant.now())
-                        .build()
+        return new  ContactResponseDTO(
+                UUID.randomUUID(),
+                "Message received. will response shortly.",
+                Instant.now()
         );
     }
 }
