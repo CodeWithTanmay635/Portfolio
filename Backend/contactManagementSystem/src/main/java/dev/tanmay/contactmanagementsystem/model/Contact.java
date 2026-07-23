@@ -95,6 +95,9 @@ public class Contact {
         @Column(name = "admin_note", length = 1000)
         private String adminNote;
 
+        @Column(name = "reference_id", unique = true, nullable = false, length = 30)
+        private String referenceId;
+
         public void markReplied() {
                 this.status = MessageStatus.REPLIED;
                 this.repliedAt = Instant.now();
