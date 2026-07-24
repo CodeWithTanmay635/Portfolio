@@ -37,7 +37,7 @@ public class ContactService {
     }
 
     @Transactional
-    public ContactResponseDTO save(ContactRequestDTO dto) {
+    public ContactResponseDTO submitContact(ContactRequestDTO dto) {
         if(dto.website() != null && !dto.website().isBlank()){
             //do not throw exception - bot learns to retry
             //return fake success - bot thinks it worked
