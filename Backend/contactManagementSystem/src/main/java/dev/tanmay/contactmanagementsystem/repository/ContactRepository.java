@@ -3,6 +3,9 @@ package dev.tanmay.contactmanagementsystem.repository;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -64,7 +67,13 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
                 Instant to,
                 Pageable pageable
         );
-    }
+
+        boolean existsByEmailAndCreatedAtAfter(
+                @NotBlank(message = "Email required")
+                @Email(message = "Enter Valid Message")
+                @Size(max = 255)
+                String email, Instant minus);
+}
 
 
 
