@@ -91,7 +91,7 @@
 
         private ContactResponseDTO validateHoneyPot(ContactRequestDTO dto){
             if(dto.website() != null && !dto.website().isBlank()){
-                log.warn("Bot submission detected");
+                log.warn("Honey pot triggered for email= {}", dto.website());
                 return buildFakeResponse();
             }
             return  null;
