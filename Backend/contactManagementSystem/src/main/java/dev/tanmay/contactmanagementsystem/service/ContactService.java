@@ -151,13 +151,4 @@
                     saved.getCreatedAt()
             );
         }
-
-        private boolean looksLikeMessage(String text) {
-            return text.length() > 40
-                    || text.contains(".")
-                    || text.contains("please")
-                    || text.contains("website")
-                    || text.contains("project")
-                    || text.contains("help");
-        }
     }
