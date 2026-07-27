@@ -59,13 +59,10 @@
 
             //saves contact
             Contact saved = savedContact(contact);
-            auditLogRepository.save(AuditLog.of(
-                    saved.getId(),
-                    null,
-                    MessageStatus.NEW,
-                    "SYSTEM",
-                    "Initial submission"
-            ));
+
+            //creating Audit trails
+            createAuditLog(saved, contact.getIpAddress());
+
 
             applicationEventPublisher.publishEvent(
                     new ContactReceivedEvent(this, saved)
@@ -130,8 +127,14 @@
             return saved;
         }
 
-        private void createAuditLog(Contact contact){
-
+        private void createAuditLog(Contact contact , String ipAddress){
+                auditLogRepository.save(AuditLog.of(
+                        contact.getId(),
+                        null,
+                        MessageStatus.NEW,
+                        "SYSTEM",
+                        "Initial submission"+ ipAddress
+                ));
         }
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
