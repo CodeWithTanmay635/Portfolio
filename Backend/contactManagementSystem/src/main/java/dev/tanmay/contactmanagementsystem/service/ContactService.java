@@ -29,7 +29,10 @@
         private final ApplicationEventPublisher applicationEventPublisher;
 
         @Autowired
-        public  ContactService(ContactRepository contactRepository, AuditLogRepository auditLogRepository,  PriorityEstimatorService priorityEstimatorService, ApplicationEventPublisher applicationEventPublisher) {
+        public  ContactService(ContactRepository contactRepository,
+                               AuditLogRepository auditLogRepository,
+                               PriorityEstimatorService priorityEstimatorService,
+                               ApplicationEventPublisher applicationEventPublisher) {
             this.contactRepository = contactRepository;
             this.auditLogRepository = auditLogRepository;
             this.priorityEstimatorService = priorityEstimatorService;
@@ -48,16 +51,11 @@
             //validates duplicate submissions
             validateDuplicateSubmission(dto);
 
-            Contact contact = Contact.builder()
-                    .name(dto.name().trim())
-                    .email(dto.email().toLowerCase().trim())
-                    .message(dto.message().trim())
-                   //.userAgent(userAgent)
-                    .build();
+            //builds contact
+            Contact contact = buildContact(dto);
 
-            int score = priorityEstimatorService.calculateScore(dto);
-            contact.setPriority(MessagePriority.fromScore(score));
-            contact.setPriorityScore(score);
+            //assigns priority
+            assignPriority(contact,dto);
 
             Contact saved = contactRepository.save(contact);
 
@@ -116,6 +114,15 @@
         private String generateReferenceId(){
             return "CNT-" + UUID.randomUUID().toString().substring(0,8).toUpperCase();
         }
+
+        private void assignPriority(Contact contact,
+                                    ContactRequestDTO dto){
+                int score = priorityEstimatorService.calculateScore(dto);
+                contact.setPriority(MessagePriority.fromScore(score));
+                contact.setPriorityScore(score);
+        }
+
+
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
                     || text.contains(".")
