@@ -102,6 +102,20 @@
                 throw new DuplicateContactException(dto.email());
             }
         }
+
+        private Contact buildContact(ContactRequestDTO dto){
+            return Contact.builder()
+                    .referenceId(generateReferenceId())
+                    .name(dto.name().trim())
+                    .email(dto.email().toLowerCase().trim())
+                    .message(dto.message().trim())
+                    .status(MessageStatus.NEW)
+                    .build();
+        }
+
+        private String generateReferenceId(){
+            return "CNT-" + UUID.randomUUID().toString().substring(0,8).toUpperCase();
+        }
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
                     || text.contains(".")
