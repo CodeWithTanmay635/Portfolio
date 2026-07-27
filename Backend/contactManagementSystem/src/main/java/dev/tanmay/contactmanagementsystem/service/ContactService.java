@@ -136,6 +136,16 @@
                         "Initial submission"+ ipAddress
                 ));
         }
+
+        private void publishEvent(Contact saved){
+            applicationEventPublisher.publishEvent(
+                    new ContactReceivedEvent(
+                            this,
+                            saved));
+            log.info("Event Published ID-- {}",saved.getId() );
+        }
+
+
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
                     || text.contains(".")
