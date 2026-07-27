@@ -57,8 +57,8 @@
             //assigns priority
             assignPriority(contact,dto);
 
-            Contact saved = contactRepository.save(contact);
-
+            //saves contact
+            Contact saved = savedContact(contact);
             auditLogRepository.save(AuditLog.of(
                     saved.getId(),
                     null,
@@ -122,7 +122,17 @@
                 contact.setPriorityScore(score);
         }
 
+        private Contact savedContact(Contact contact){
+            Contact saved = contactRepository.save(contact);
+            log.info("Saved Contact -- ID {}, Priority {}",
+                    saved.getId(),
+                    saved.getPriority());
+            return saved;
+        }
 
+        private void createAuditLog(Contact contact){
+
+        }
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
                     || text.contains(".")
