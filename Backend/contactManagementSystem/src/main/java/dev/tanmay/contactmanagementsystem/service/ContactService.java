@@ -63,12 +63,11 @@
             //creating Audit trails
             createAuditLog(saved, contact.getIpAddress());
 
+            //publish event
+            publishEvent(saved);
 
-            applicationEventPublisher.publishEvent(
-                    new ContactReceivedEvent(this, saved)
-            );
-
-            return ContactResponseDTO.from(saved);
+            //return response
+            return buildContactResponse(saved);
         }
 
         private ContactResponseDTO buildFakeResponse(){
@@ -145,6 +144,13 @@
             log.info("Event Published ID-- {}",saved.getId() );
         }
 
+        private ContactResponseDTO buildContactResponse(Contact saved){
+            return new ContactResponseDTO(
+                    saved.getId(),
+                    "Message Will Review Shortly",
+                    saved.getCreatedAt()
+            );
+        }
 
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
