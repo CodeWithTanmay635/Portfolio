@@ -38,20 +38,15 @@
 
         @Transactional
         public ContactResponseDTO submitContact(ContactRequestDTO dto) {
+
+            //validate honeypot
             ContactResponseDTO fakeResponse = validateHoneyPot(dto);
             if(fakeResponse != null){
                 return  fakeResponse;
             }
 
-            boolean isDuplicate = contactRepository
-                    .existsByEmailAndCreatedAtAfter(
-                            dto.email(),
-                            Instant.now().minus(10, ChronoUnit.MINUTES)
-                    );
-            if(isDuplicate){
-                throw new DuplicateContactException(dto.email());
-
-            }
+            //validates duplicate submissions
+            validateDuplicateSubmission(dto);
 
             Contact contact = Contact.builder()
                     .name(dto.name().trim())
@@ -95,6 +90,17 @@
                 return buildFakeResponse();
             }
             return  null;
+        }
+
+        private void validateDuplicateSubmission(ContactRequestDTO dto){
+            boolean isDuplicate = contactRepository
+                    .existsByEmailAndCreatedAtAfter(
+                            dto.email().toLowerCase().trim(),
+                            Instant.now().minus(10, ChronoUnit.MINUTES)
+                    );
+            if(isDuplicate){
+                throw new DuplicateContactException(dto.email());
+            }
         }
         private boolean looksLikeMessage(String text) {
             return text.length() > 40
