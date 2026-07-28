@@ -72,6 +72,8 @@
 
         //-----All Helper Methods should be private other should just access submitContact() not these helper methods------
         private ContactResponseDTO buildFakeResponse(){
+
+            //Fake Response Where if bot is detected then the bot gets success message
             return new  ContactResponseDTO(
                     UUID.randomUUID(),
                     "Message received. will response shortly.",
