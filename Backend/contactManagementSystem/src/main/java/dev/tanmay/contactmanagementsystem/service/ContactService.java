@@ -84,6 +84,7 @@
         private ContactResponseDTO validateHoneyPot(ContactRequestDTO dto){
 
             //checks if the visitor is actual human or a bot
+
             if(dto.website() != null && !dto.website().isBlank()){
                 log.warn("Honey pot triggered for email= {}", dto.website());
                 return buildFakeResponse();
