@@ -10,7 +10,6 @@
     import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
     import jakarta.transaction.Transactional;
     import lombok.extern.slf4j.Slf4j;
-    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.ApplicationEventPublisher;
     import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@
         private final PriorityEstimatorService priorityEstimatorService;
         private final ApplicationEventPublisher applicationEventPublisher;
 
-        @Autowired
+        //Not Using @Autowired because this class only has one Constructor.
         public  ContactService(ContactRepository contactRepository,
                                AuditLogRepository auditLogRepository,
                                PriorityEstimatorService priorityEstimatorService,
