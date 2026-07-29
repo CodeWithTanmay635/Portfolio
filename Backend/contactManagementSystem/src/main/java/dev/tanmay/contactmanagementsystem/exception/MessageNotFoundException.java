@@ -1,9 +1,10 @@
 package dev.tanmay.contactmanagementsystem.exception;
 
 
+import java.util.UUID;
 
 public class MessageNotFoundException extends RuntimeException {
-    public MessageNotFoundException(Long id) {
+    public MessageNotFoundException(UUID id) {
         super("Message not found with id: " + id);
     }
 }
