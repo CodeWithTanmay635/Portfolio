@@ -1,8 +1,6 @@
 package dev.tanmay.contactmanagementsystem.repository;
 
 import dev.tanmay.contactmanagementsystem.model.AuditLog;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +11,9 @@ import java.util.UUID;
 @Repository
 public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
 
-    List<AuditLog> findAllByContactIdOrderedByChangedAtAsc(UUID ContactId);
+    List<AuditLog> findAllByContactIdOrderByChangedAtAsc(UUID contactId);
 
-    List<AuditLog> findAllByContactIdOrderedByChangedAtDesc(UUID ContactId);
+    List<AuditLog> findAllByContactIdOrderByChangedAtDesc(UUID ContactId);
 
     List<AuditLog> findByChangedAtBetween(
             Instant from,
