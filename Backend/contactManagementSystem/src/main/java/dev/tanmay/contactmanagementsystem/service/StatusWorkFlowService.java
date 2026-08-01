@@ -53,4 +53,16 @@ public class StatusWorkFlowService {
             throw new InvalidStatusTransitionException(contact);
         }
     }
+
+    private void applyStatusChange(
+            Contact contact,
+            MessageStatus newStatus
+    ){
+        MessageStatus oldStatus = contact.getStatus();
+        contact.setStatus(newStatus);
+
+        if(oldStatus == MessageStatus.REPLIED) {
+            contact.markReplied();
+        }
+    }
 }
