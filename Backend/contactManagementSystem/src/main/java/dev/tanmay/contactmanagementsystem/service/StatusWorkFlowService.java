@@ -5,17 +5,21 @@ import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ApiResponse;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidStatusTransitionException;
+import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.InvalidTransactionException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class StatusWorkFlowService {
 
@@ -62,5 +66,28 @@ public class StatusWorkFlowService {
         if(oldStatus == MessageStatus.REPLIED) {
             contact.markReplied();
         }
+
+        log.info("Status Changed Successfully of ID : {} | {} -> {}",contact.getId(), oldStatus, newStatus);
+    }
+
+    private void saveContact(Contact contact) {
+        contactRepository.save(contact);
+    }
+
+    private void createAuditLog(Contact contact,
+                                MessageStatus newStatus,
+                                String note) {
+            String actor = SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getName();
+
+            auditLogRepository.save(AuditLog.of(
+                    contact.getId(),
+                    contact.getStatus(),
+                    newStatus,
+                    actor,
+                    note
+            ));
     }
 }
