@@ -33,9 +33,7 @@ public class StatusWorkFlowService {
     }
 
     @Transactional
-    public AdminContactResponseDTO updateStatus(
-            UUID id,
-            StatusUpdateRequest dto) {
+    public AdminContactResponseDTO updateStatus (UUID id, StatusUpdateRequest dto) {
         return null;
     }
 
