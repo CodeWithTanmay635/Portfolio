@@ -90,4 +90,14 @@ public class StatusWorkFlowService {
                     note
             ));
     }
+
+    private void publishIfReplied(Contact saved){
+        if(saved.getStatus() == MessageStatus.REPLIED){
+            eventPublisher.publishEvent(
+                    new ContactReceivedEvent(this, saved));
+                log.info("Replied Successfully of ID : {}",saved.getId());
+        }
+    }
+
+
 }
