@@ -2,8 +2,6 @@ package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.request.StatusUpdateRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
-import dev.tanmay.contactmanagementsystem.dto.response.ApiResponse;
-import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidStatusTransitionException;
 import dev.tanmay.contactmanagementsystem.model.AuditLog;
@@ -11,7 +9,6 @@ import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
-import jakarta.transaction.InvalidTransactionException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -45,7 +42,6 @@ public class StatusWorkFlowService {
 
         //validate contact Transition
         validateTransaction(contact, dto.newStatus());
-        MessageStatus oldStatus = contact.getStatus();
 
         //apply Status
         applyStatusChange(contact, dto.newStatus());
