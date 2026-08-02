@@ -40,8 +40,27 @@ public class StatusWorkFlowService {
     @Transactional
     public AdminContactResponseDTO updateStatus (UUID id, StatusUpdateRequest dto) {
 
+        //Find Contact
+        Contact contact = findContact(id);
 
-        return null;
+        //validate contact Transition
+        validateTransaction(contact, dto.newStatus());
+        MessageStatus oldStatus = contact.getStatus();
+
+        //apply Status
+        applyStatusChange(contact, dto.newStatus());
+
+        //save status
+        Contact saved = contactRepository.save(contact);
+
+        //create Audit log
+        createAuditLog(saved, dto.newStatus(), dto.note());
+
+        //publish event
+        publishIfReplied(contact);
+
+        //build response
+        return buildResponse(saved);
     }
 
     //---------------------Helper Methods-------------------------
@@ -73,10 +92,6 @@ public class StatusWorkFlowService {
         log.info("Status Changed Successfully of ID : {} | {} -> {}",contact.getId(), oldStatus, newStatus);
     }
 
-    private void saveContact(Contact contact) {
-        contactRepository.save(contact);
-    }
-
     private void createAuditLog(Contact contact,
                                 MessageStatus newStatus,
                                 String note) {
@@ -102,11 +117,7 @@ public class StatusWorkFlowService {
         }
     }
 
-    private ContactResponseDTO buildResponse(Contact contact) {
-        return new ContactResponseDTO(
-                contact.getId(),
-                "Status Changed successfully",
-                contact.getCreatedAt()
-        );
+    private AdminContactResponseDTO buildResponse(Contact contact) {
+        return AdminContactResponseDTO.from(contact);
     }
 }
