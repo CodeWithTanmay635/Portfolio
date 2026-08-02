@@ -3,6 +3,7 @@ package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.StatusUpdateRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.ApiResponse;
+import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidStatusTransitionException;
 import dev.tanmay.contactmanagementsystem.model.AuditLog;
@@ -38,6 +39,8 @@ public class StatusWorkFlowService {
 
     @Transactional
     public AdminContactResponseDTO updateStatus (UUID id, StatusUpdateRequest dto) {
+
+
         return null;
     }
 
@@ -99,5 +102,11 @@ public class StatusWorkFlowService {
         }
     }
 
-
+    private ContactResponseDTO buildResponse(Contact contact) {
+        return new ContactResponseDTO(
+                contact.getId(),
+                "Status Changed successfully",
+                contact.getCreatedAt()
+        );
+    }
 }
