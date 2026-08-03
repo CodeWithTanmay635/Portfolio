@@ -11,6 +11,7 @@ import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.sqm.internal.SqmInterpretationsKey;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,13 @@ public class ReplyService {
                 actor,
                 "Reply Sent -- subject" + subject
         ));
-
-
    }
+
+   private void publishEvent(Contact saved){
+        eventPublisher.publishEvent(
+                new ContactReceivedEvent(this, saved)
+        );
+        log.info("Contact received event published ID: {} ", saved.getId());
+   }
+
 }
