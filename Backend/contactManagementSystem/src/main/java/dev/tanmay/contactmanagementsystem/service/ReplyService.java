@@ -10,6 +10,7 @@ import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,7 @@ public class ReplyService {
         this.eventPublisher = eventPublisher;
     }
 
+    @Transactional
     public AdminContactResponseDTO replyToContact(
             UUID id,
             ReplyRequest  replyRequest
