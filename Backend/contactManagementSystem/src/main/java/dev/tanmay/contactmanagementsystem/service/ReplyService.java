@@ -4,6 +4,7 @@ import dev.tanmay.contactmanagementsystem.dto.request.ReplyRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.exception.AlreadyRepliedException;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
+import dev.tanmay.contactmanagementsystem.exception.InvalidReplyException;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
@@ -52,6 +53,9 @@ public class ReplyService {
     private void validateReply(Contact contact, ReplyRequest request) {
         if(contact.getStatus() == MessageStatus.REPLIED){
             throw new AlreadyRepliedException(contact.getReferenceId());
+        }
+        if(contact.getStatus() == MessageStatus.ARCHIVED){
+            throw new InvalidReplyException("Cannot reply message is archived")
         }
     }
 }
