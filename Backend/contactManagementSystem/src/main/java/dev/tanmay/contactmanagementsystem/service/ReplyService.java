@@ -11,7 +11,6 @@ import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.sqm.internal.SqmInterpretationsKey;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -43,8 +42,14 @@ public class ReplyService {
             ReplyRequest  replyRequest
     ){
         Contact contact = findContact(id);
-        validateReply(contact, replyRequest);
-        return  null;
+        MessageStatus oldStatus = contact.getStatus();
+        validateReply(contact);
+        mailService.sendReply(contact, replyRequest);
+        contact.markReplied();
+        Contact saved = contactRepository.save(contact);
+        createAuditLog(saved,oldStatus,replyRequest.message());
+        publishEvent(saved);
+        return  buildResponse(saved);
     }
 
     //---------------------------- Helper Methods ----------------------------//
@@ -87,4 +92,7 @@ public class ReplyService {
         log.info("Contact received event published ID: {} ", saved.getId());
    }
 
+   private AdminContactResponseDTO buildResponse(Contact saved){
+        return AdminContactResponseDTO.from(saved);
+   }
 }
