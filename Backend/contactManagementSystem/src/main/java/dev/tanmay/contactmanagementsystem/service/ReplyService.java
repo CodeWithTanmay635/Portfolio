@@ -5,12 +5,14 @@ import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.exception.AlreadyRepliedException;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidReplyException;
+import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -40,6 +42,7 @@ public class ReplyService {
             ReplyRequest  replyRequest
     ){
         Contact contact = findContact(id);
+        validateReply(contact, replyRequest);
         return  null;
     }
 
@@ -50,7 +53,7 @@ public class ReplyService {
                        new ContactNotFoundException(id));
     }
 
-    private void validateReply(Contact contact, ReplyRequest request) {
+    private void validateReply(Contact contact) {
         if(contact.getStatus() == MessageStatus.REPLIED){
             throw new AlreadyRepliedException(contact.getReferenceId());
         }
@@ -58,4 +61,23 @@ public class ReplyService {
             throw new InvalidReplyException("Cannot reply message is archived");
         }
     }
+
+   private void createAuditLog(Contact contact,
+                               MessageStatus status,
+                               String subject){
+        String actor = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        auditLogRepository.save(AuditLog.of (
+                contact.getId(),
+                status,
+                MessageStatus.REPLIED,
+                actor,
+                "Reply Sent -- subject" + subject
+        ));
+
+
+   }
 }
