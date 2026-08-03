@@ -2,8 +2,10 @@ package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.request.ReplyRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.exception.AlreadyRepliedException;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.model.Contact;
+import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,12 +38,20 @@ public class ReplyService {
             UUID id,
             ReplyRequest  replyRequest
     ){
+        Contact contact = findContact(id);
         return  null;
     }
 
+    //---------------------------- Helper Methods ----------------------------//
     private Contact findContact(UUID id) {
         return contactRepository
                 .findById(id).orElseThrow(() ->
                        new ContactNotFoundException(id));
+    }
+
+    private void validateReply(Contact contact, ReplyRequest request) {
+        if(contact.getStatus() == MessageStatus.REPLIED){
+            throw new AlreadyRepliedException(contact.getReferenceId());
+        }
     }
 }
