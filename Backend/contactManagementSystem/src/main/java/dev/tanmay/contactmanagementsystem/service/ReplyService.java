@@ -80,7 +80,7 @@ public class ReplyService {
                 status,
                 MessageStatus.REPLIED,
                 actor,
-                "Reply Sent -- subject" + subject
+                "Reply Sent subject :" + subject
         ));
    }
 
