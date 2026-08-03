@@ -65,9 +65,6 @@ public class ReplyService {
         if(!MessageStatus.REPLYABLE_STATUSES.contains(contact.getStatus())){
             throw new InvalidReplyException(MessageStatus.REPLYABLE_STATUSES.toString());
         }
-        if(contact.getStatus() == MessageStatus.ARCHIVED){
-            throw new InvalidReplyException("Cannot reply message is archived");
-        }
     }
 
    private void createAuditLog(Contact contact,
