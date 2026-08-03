@@ -62,8 +62,8 @@ public class ReplyService {
     }
 
     private void validateReply(Contact contact) {
-        if(contact.getStatus() == MessageStatus.REPLIED){
-            throw new AlreadyRepliedException(contact.getReferenceId());
+        if(!MessageStatus.REPLYABLE_STATUSES.contains(contact.getStatus())){
+            throw new InvalidReplyException(MessageStatus.REPLYABLE_STATUSES.toString());
         }
         if(contact.getStatus() == MessageStatus.ARCHIVED){
             throw new InvalidReplyException("Cannot reply message is archived");
@@ -91,8 +91,7 @@ public class ReplyService {
         eventPublisher.publishEvent(
                 new ContactReceivedEvent(this, saved)
         );
-        log.info("Contact received event published ID: {} ", saved.getId());
-   }
+       log.info("Reply event published for contact {}", saved.getReferenceId());   }
 
    private AdminContactResponseDTO buildResponse(Contact saved){
         return AdminContactResponseDTO.from(saved);
