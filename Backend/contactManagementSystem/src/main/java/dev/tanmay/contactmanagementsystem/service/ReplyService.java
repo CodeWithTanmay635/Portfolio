@@ -55,7 +55,7 @@ public class ReplyService {
             throw new AlreadyRepliedException(contact.getReferenceId());
         }
         if(contact.getStatus() == MessageStatus.ARCHIVED){
-            throw new InvalidReplyException("Cannot reply message is archived")
+            throw new InvalidReplyException("Cannot reply message is archived");
         }
     }
 }
