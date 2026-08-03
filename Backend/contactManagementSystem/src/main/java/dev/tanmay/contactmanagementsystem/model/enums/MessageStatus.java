@@ -1,5 +1,7 @@
 package dev.tanmay.contactmanagementsystem.model.enums;
 
+import java.util.Set;
+
 public enum MessageStatus {
     NEW,
     READ,
@@ -16,6 +18,12 @@ public enum MessageStatus {
             case ARCHIVED -> false;
         };
     }
+
+    public static final Set<MessageStatus> REPLYABLE_STATUSES = Set.of(
+            NEW,
+            READ,
+            REPLIED,
+            ARCHIVED);
 }
 /**
 this class is for message lifecycle which states weather the message is in NEW, READ,
