@@ -86,7 +86,7 @@ public class ReplyService {
 
    private void publishEvent(Contact saved){
         eventPublisher.publishEvent(
-                new ContactReceivedEvent(this, saved)
+                new ContactRepliedEvent(this, saved)
         );
        log.info("Reply event published for contact {}", saved.getReferenceId());   }
 
