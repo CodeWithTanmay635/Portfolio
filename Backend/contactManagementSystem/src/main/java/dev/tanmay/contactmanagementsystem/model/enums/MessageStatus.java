@@ -20,10 +20,10 @@ public enum MessageStatus {
     }
 
     public static final Set<MessageStatus> REPLYABLE_STATUSES = Set.of(
-            NEW,
-            READ,
-            REPLIED,
-            ARCHIVED);
+            MessageStatus.NEW,
+            MessageStatus.READ,
+            MessageStatus.PENDING
+    );
 }
 /**
 this class is for message lifecycle which states weather the message is in NEW, READ,
