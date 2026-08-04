@@ -40,15 +40,15 @@ public class ReplyService {
     @Transactional
     public AdminContactResponseDTO replyToContact(
             UUID id,
-            ReplyRequest  replyRequest
+            ReplyRequest  dto
     ){
         Contact contact = findContact(id);
         MessageStatus oldStatus = contact.getStatus();
         validateReply(contact);
-        mailService.sendReply(contact, replyRequest);
+        mailService.sendReply(contact, dto);
         contact.markReplied();
         Contact saved = contactRepository.save(contact);
-        createAuditLog(saved,oldStatus,replyRequest.message());
+        createAuditLog(saved,oldStatus,dto.message());
         publishEvent(saved);
         return  buildResponse(saved);
     }
