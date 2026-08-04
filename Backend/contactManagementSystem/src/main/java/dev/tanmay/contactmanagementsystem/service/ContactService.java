@@ -1,6 +1,7 @@
     package dev.tanmay.contactmanagementsystem.service;
     import dev.tanmay.contactmanagementsystem.dto.request.ContactRequestDTO;
     import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
+    import dev.tanmay.contactmanagementsystem.event.ContactReceivedEvent;
     import dev.tanmay.contactmanagementsystem.exception.DuplicateContactException;
     import dev.tanmay.contactmanagementsystem.model.AuditLog;
     import dev.tanmay.contactmanagementsystem.model.Contact;

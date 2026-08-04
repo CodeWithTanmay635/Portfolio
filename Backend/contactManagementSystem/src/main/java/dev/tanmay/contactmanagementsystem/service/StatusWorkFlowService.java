@@ -2,6 +2,7 @@ package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.request.StatusUpdateRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.event.ContactReceivedEvent;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidStatusTransitionException;
 import dev.tanmay.contactmanagementsystem.model.AuditLog;

@@ -2,6 +2,7 @@ package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.request.ReplyRequest;
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.event.ContactRepliedEvent;
 import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidReplyException;
 import dev.tanmay.contactmanagementsystem.model.AuditLog;

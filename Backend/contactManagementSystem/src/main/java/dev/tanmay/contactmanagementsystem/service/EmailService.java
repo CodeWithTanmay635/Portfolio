@@ -3,7 +3,6 @@ package dev.tanmay.contactmanagementsystem.service;
 import dev.tanmay.contactmanagementsystem.dto.request.ReplyRequest;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,26 +15,53 @@ public class EmailService {
     private final JavaMailSender mailSender;
 
     @Value("${app.notification.email}")
-    private String notificationEmail; // YOUR email, where you receive alerts
+    private String adminEmail;
 
-    @Autowired
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    public void sendReply(Contact contact, ReplyRequest replyRequest) {
-        log.info("Sending email to contact with id {} subject: {}", contact.getId(), contact.getMessage());
-    }
-    public void sendNewMessageNotification(String visitorName, String visitorEmail, String visitorMessage) {
+    // ── visitor gets confirmation ──────────────────────────────
+    public void sendAcknowledgement(Contact contact) {
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(notificationEmail);
-        mail.setSubject("New Contact Message from " + visitorName);
+        mail.setTo(contact.getEmail());
+        mail.setSubject("We received your message");
         mail.setText(
-                "You received a new message on your portfolio.\n\n" +
-                        "Name: " + visitorName + "\n" +
-                        "Email: " + visitorEmail + "\n" +
-                        "Message:\n" + visitorMessage
+                "Hi " + contact.getName() + ",\n\n" +
+                        "Thank you for reaching out.\n" +
+                        "We have received your message and will get back to you shortly.\n\n" +
+                        "Reference ID: " + contact.getId() + "\n\n" +
+                        "Regards"
         );
         mailSender.send(mail);
+        log.info("Acknowledgement sent — to: {}", contact.getEmail());
+    }
+
+    // ── admin gets notification — Phase 2 Telegram replaces ───
+    public void sendAdminNotification(Contact contact) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(adminEmail);
+        mail.setSubject("New message from " + contact.getName());
+        mail.setText(
+                "New contact submission.\n\n" +
+                        "Name:    " + contact.getName()    + "\n" +
+                        "Email:   " + contact.getEmail()   + "\n" +
+                        "Message: " + contact.getMessage() + "\n" +
+                        "Priority: " + contact.getPriority()
+        );
+        mailSender.send(mail);
+        log.info("Admin notification sent — contact ID: {}",
+                contact.getId());
+    }
+
+    // ── admin replies to visitor ───────────────────────────────
+    public void sendReply(Contact contact, ReplyRequest dto) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(contact.getEmail());
+        mail.setSubject(dto.message());
+        mail.setText(dto.body());
+        mailSender.send(mail);
+        log.info("Reply sent — to: {} subject: {}",
+                contact.getEmail(), dto.message());
     }
 }
