@@ -1,4 +1,4 @@
-package dev.tanmay.contactmanagementsystem.service;
+package dev.tanmay.contactmanagementsystem.event;
 
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import lombok.Getter;
