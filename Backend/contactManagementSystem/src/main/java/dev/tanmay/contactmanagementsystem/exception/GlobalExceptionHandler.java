@@ -27,7 +27,7 @@ public class GlobalExceptionHandler{
 
   @ExceptionHandler(ContactNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse<Void> handleNotFound(ContactNotFoundException ex){
+    public ApiResponse<Void> handleContactNotFound(ContactNotFoundException ex){
       log.warn(ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler{
 
  @ExceptionHandler(MessageNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse<Void> handleNotFound(MessageNotFoundException ex){
+    public ApiResponse<Void> handleMessageNotFound(MessageNotFoundException ex){
       log.warn(ex.getMessage());
       return ApiResponse.error(ex.getMessage());
  }
