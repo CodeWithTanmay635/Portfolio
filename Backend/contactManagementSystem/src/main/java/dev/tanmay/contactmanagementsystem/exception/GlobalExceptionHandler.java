@@ -14,42 +14,49 @@ public class GlobalExceptionHandler{
   @ExceptionHandler(AlreadyRepliedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiResponse<Void> handleAlreadyReplied(AlreadyRepliedException ex){
-      log.warn(ex.getMessage());
+      log.warn("Already Replied : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(DuplicateContactException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ApiResponse<Void> handleDuplicateContact(DuplicateContactException ex){
-      log.warn(ex.getMessage());
+      log.warn("Duplicate found : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(ContactNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<Void> handleContactNotFound(ContactNotFoundException ex){
-      log.warn(ex.getMessage());
+      log.warn("Contact Not Found : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(InvalidReplyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> handleInvalidReply(InvalidReplyException ex){
-      log.warn(ex.getMessage());
+      log.warn("Invalid Reply : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(InvalidStatusTransitionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> handleInvalidStatus(InvalidStatusTransitionException ex){
-      log.warn(ex.getMessage());
+      log.warn("Invalid Status : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
  @ExceptionHandler(MessageNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<Void> handleMessageNotFound(MessageNotFoundException ex){
-      log.warn(ex.getMessage());
+      log.warn("Message Not found : {}",ex.getMessage());
       return ApiResponse.error(ex.getMessage());
- }
+  }
+
+ @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<Void> handleGeneric(Exception ex) {
+        log.error("Unexpected error: {}", ex.getMessage(), ex);
+        return ApiResponse.error(ex.getMessage());
+  }
 }
