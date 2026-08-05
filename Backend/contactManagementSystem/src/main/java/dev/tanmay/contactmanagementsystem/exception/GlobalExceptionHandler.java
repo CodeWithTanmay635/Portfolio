@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler{
+    //ExceptionHandler method makes clean JSON
   @ExceptionHandler(AlreadyRepliedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiResponse<Void> handleAlreadyReplied(AlreadyRepliedException ex){
