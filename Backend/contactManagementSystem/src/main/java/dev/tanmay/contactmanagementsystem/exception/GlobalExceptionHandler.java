@@ -36,5 +36,15 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> handleInvalidReply(InvalidReplyException ex){
       log.warn(ex.getMessage());
+      return ApiResponse.error(ex.getMessage());
   }
+
+  @ExceptionHandler(InvalidStatusTransitionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<Void> handleInvalidStatus(InvalidStatusTransitionException ex){
+      log.warn(ex.getMessage());
+      return ApiResponse.error(ex.getMessage());
+  }
+
+
 }
