@@ -14,23 +14,27 @@ public class GlobalExceptionHandler{
   @ExceptionHandler(AlreadyRepliedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiResponse<Void> handleAlreadyReplied(AlreadyRepliedException ex){
-      log.info(ex.getMessage());
+      log.warn(ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(DuplicateContactException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<Void> handleDuplicateContact(DuplicateContactException ex){
-      log.info(ex.getMessage());
+      log.warn(ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
   @ExceptionHandler(ContactNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<Void> handleNotFound(ContactNotFoundException ex){
-      log.info(ex.getMessage());
+      log.warn(ex.getMessage());
       return ApiResponse.error(ex.getMessage());
   }
 
-
+  @ExceptionHandler(InvalidReplyException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<Void> handleInvalidReply(InvalidReplyException ex){
+      log.warn(ex.getMessage());
+  }
 }
