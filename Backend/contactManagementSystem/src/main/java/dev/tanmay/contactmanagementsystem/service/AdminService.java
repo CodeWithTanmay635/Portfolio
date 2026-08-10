@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ConcurrentModificationException;
+import java.util.UUID;
+
 @Slf4j
 @Service
 public class AdminService {
@@ -27,4 +30,11 @@ public class AdminService {
         return contactRepository.findAll(pageable)
                 .map(AdminContactResponseDTO :: from);
     }
+
+    public AdminContactResponseDTO getById(UUID id){
+        return contactRepository.findById(id)
+                .map(AdminContactResponseDTO :: from)
+                .orElseThrow(() -> new ConcurrentModificationException(id.toString())
+                );
+        }
 }
