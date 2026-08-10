@@ -1,7 +1,6 @@
 package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
-import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
