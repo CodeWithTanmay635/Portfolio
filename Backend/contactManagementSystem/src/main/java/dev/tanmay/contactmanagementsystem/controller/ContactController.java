@@ -10,7 +10,7 @@ public class ContactController {
     private final ContactService contactService;
 
     public ContactController(
-            ContactService contactService,
+            ContactService contactService
     ) {
         this.contactService = contactService;
     }
