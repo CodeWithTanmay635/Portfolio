@@ -22,12 +22,4 @@ public class AdminController {
     ){
         this.adminService = adminService;
     }
-
-    @PostMapping
-    ResponseEntity<ApiResponse<ContactResponseDTO>> submitContact(
-            @RequestBody ContactRequestDTO dto,
-            HttpServletRequest request){
-        log.info
-    }
-
 }
