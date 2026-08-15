@@ -40,7 +40,7 @@ public class Contact {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @EqualsAndHashCode.Exclude
         @Column(nullable = false)
-        private Long id;
+        private UUID id;
 
         @NotBlank
         @Size(max = 100)
@@ -102,7 +102,7 @@ public class Contact {
         @Column(name = "reference_id", unique = true, nullable = false, length = 30)
         private String referenceId;
 
-        public void markedReplied(){
+        public void markReplied(){
                 this.status = MessageStatus.REPLIED;
                 this.repliedAt = Instant.now();
         }
