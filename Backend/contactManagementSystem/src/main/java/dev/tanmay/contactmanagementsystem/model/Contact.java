@@ -36,12 +36,11 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @SuppressWarnings("JpaDataSourceORMInspection")
 public class Contact {
-
         @Id
-        @GeneratedValue(strategy = GenerationType.UUID)
-        @EqualsAndHashCode.Include
-        @Column(nullable = false, unique = true)
-        private UUID id;
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @EqualsAndHashCode.Exclude
+        @Column(nullable = false)
+        private Long id;
 
         @NotBlank
         @Size(max = 100)
@@ -54,12 +53,17 @@ public class Contact {
         private String email;
 
         @NotBlank
+        @Size(max = 90)
+        @Column(updatable = false, nullable = false, length = 500)
+        private String subject;
+
+        @NotBlank
         @Size(max = 2000)
         @Column(updatable = false, nullable = false, length = 2000)
         private String message;
 
         @Enumerated(EnumType.STRING)
-        @Column(nullable = false, length = 20)
+        @Column(nullable = false, updatable = false)
         @Builder.Default
         private MessageStatus status = MessageStatus.NEW;
 
@@ -71,10 +75,10 @@ public class Contact {
         @Column(name = "priority_score")
         private int priorityScore;
 
-        @Column(name = "ip_address", length = 45)
+        @Column(name = "ip_address")
         private String ipAddress;
 
-        @Column(name = "user_agent" , length = 500)
+        @Column(name = "user_agent", length = 45)
         private String userAgent;
 
         @Version
@@ -98,7 +102,7 @@ public class Contact {
         @Column(name = "reference_id", unique = true, nullable = false, length = 30)
         private String referenceId;
 
-        public void markReplied() {
+        public void markedReplied(){
                 this.status = MessageStatus.REPLIED;
                 this.repliedAt = Instant.now();
         }
