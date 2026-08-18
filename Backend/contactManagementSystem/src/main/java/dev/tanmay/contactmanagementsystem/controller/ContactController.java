@@ -24,9 +24,8 @@ public class ContactController {
         this.contactService = contactService;
     }
     @PostMapping
-    @Valid
     public ResponseEntity<ApiResponse<ContactResponseDTO>> submitContact(
-            @RequestBody ContactRequestDTO dto,
+            @Valid @RequestBody ContactRequestDTO dto,
             HttpServletRequest request){
         log.info("Received request to submit contact request IP {}",
                 request.getRemoteAddr());
@@ -41,5 +40,4 @@ public class ContactController {
                         response
                 ));
     }
-
 }
