@@ -5,6 +5,7 @@ import dev.tanmay.contactmanagementsystem.dto.response.ApiResponse;
 import dev.tanmay.contactmanagementsystem.dto.response.ContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.service.ContactService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class ContactController {
         this.contactService = contactService;
     }
     @PostMapping
+    @Valid
     public ResponseEntity<ApiResponse<ContactResponseDTO>> submitContact(
             @RequestBody ContactRequestDTO dto,
             HttpServletRequest request){
