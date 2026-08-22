@@ -19,7 +19,7 @@ public record PagedResponse<T>(
 
         boolean last
 ){
-    public  static <T> PagedResponse<T> form(Page<T> page){
+    public  static <T> PagedResponse<T> from(Page<T> page){
         return new  PagedResponse<T>(
 
                 page.getContent(),
