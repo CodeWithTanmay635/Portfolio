@@ -1,12 +1,12 @@
 package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
+import dev.tanmay.contactmanagementsystem.dto.response.PagedResponse;
+import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
+import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ConcurrentModificationException;
@@ -22,12 +22,21 @@ public class AdminService {
         this.contactRepository = contactRepository;
     }
 
-    public Page<AdminContactResponseDTO> getAllContacts(
-            int pageNumber, int size, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(sortBy));
+    public PagedResponse<AdminContactResponseDTO> getAllContacts(
+            MessageStatus status,
+            MessagePriority priority,
+            Pageable pageable) {
 
-        return contactRepository.findAll(pageable)
-                .map(AdminContactResponseDTO :: from);
+        var page = (status != null && priority != null)
+                ? contactRepository.findByStatusAndPriority(status, priority, pageable)
+                : (status != null)
+                  ? contactRepository.findByStatus(status, pageable)
+                  : (priority != null)
+                    ? contactRepository.findByPriority(priority, pageable)
+                    : contactRepository.findAll(pageable);
+
+        return PagedResponse.from(
+                page.map(AdminContactResponseDTO::from));
     }
 
     public AdminContactResponseDTO getById(UUID id){
