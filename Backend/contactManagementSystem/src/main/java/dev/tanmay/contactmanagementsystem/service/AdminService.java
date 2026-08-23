@@ -2,9 +2,11 @@ package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
 import dev.tanmay.contactmanagementsystem.dto.response.PagedResponse;
+import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.model.enums.MessagePriority;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,4 +47,13 @@ public class AdminService {
                 .orElseThrow(() -> new ConcurrentModificationException(id.toString())
                 );
         }
+
+        @Transactional
+    public void delete(UUID id) {
+        if(!contactRepository.existsById(id)){
+            throw new ContactNotFoundException(id);
+        }
+        contactRepository.deleteById(id);
+        log.info("Delete - ID: {}", id);
+    }
 }
