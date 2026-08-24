@@ -60,7 +60,7 @@ public class AdminController {
         );
     }
 
-    @GetMapping("/messages/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AdminContactResponseDTO>> getById(
             @PathVariable UUID id){
         AdminContactResponseDTO response = adminService.getById(id);
@@ -69,7 +69,7 @@ public class AdminController {
         );
     }
 
-    @PatchMapping("/message/{id}/status")
+    @PatchMapping("/{id}/status")
     public ResponseEntity<ApiResponse<AdminContactResponseDTO>> updateStatus(
             @PathVariable UUID id,
             @Valid @RequestBody StatusUpdateRequest dto
@@ -84,7 +84,7 @@ public class AdminController {
         );
     }
 
-    @PostMapping("/message/{id}/reply")
+    @PostMapping("/{id}/reply")
     public ResponseEntity<ApiResponse<AdminContactResponseDTO>> reply(
             @PathVariable UUID id,
             @Valid @RequestBody ReplyRequest dto
@@ -99,7 +99,7 @@ public class AdminController {
         );
     }
 
-    @DeleteMapping("/message/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(
             @PathVariable UUID id){
         log.info("Delete - ID: {}", id);
