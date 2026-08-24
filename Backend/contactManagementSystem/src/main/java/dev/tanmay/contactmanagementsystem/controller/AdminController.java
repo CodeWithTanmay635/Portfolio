@@ -39,7 +39,7 @@ public class AdminController {
         this.statusWorkFlowService = statusWorkFlowService;
     }
 
-    @GetMapping("/messages")
+    @GetMapping
     public ResponseEntity<ApiResponse<PagedResponse<AdminContactResponseDTO>>> getAllMessages(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
