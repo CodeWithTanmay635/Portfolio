@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/contact")
+@RequestMapping("/api/v1/contacts")
 public class ContactController {
 
     private final ContactService contactService;
