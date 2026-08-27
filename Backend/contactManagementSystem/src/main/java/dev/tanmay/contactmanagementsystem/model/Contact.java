@@ -37,7 +37,7 @@ import java.util.UUID;
 @SuppressWarnings("JpaDataSourceORMInspection")
 public class Contact {
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.UUID)
         @EqualsAndHashCode.Exclude
         @Column(nullable = false)
         private UUID id;
