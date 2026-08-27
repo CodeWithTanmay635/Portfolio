@@ -108,6 +108,7 @@
                     .referenceId(generateReferenceId())
                     .name(dto.name().trim())
                     .email(dto.email().toLowerCase().trim())
+                    .subject(dto.subject().trim())
                     .message(dto.message().trim())
                     .status(MessageStatus.NEW)
                     .build();
@@ -135,7 +136,7 @@
         private void createAuditLog(Contact contact , String ipAddress){
                 auditLogRepository.save(AuditLog.of(
                         contact.getId(),
-                        null,
+                        MessageStatus.NEW,
                         MessageStatus.NEW,
                         "SYSTEM",
                         "Initial submission"+ ipAddress

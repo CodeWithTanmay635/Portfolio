@@ -13,9 +13,13 @@ public record ContactRequestDTO(
         String name,
 
         @NotBlank(message = "Email required")
-        @Email(message = "Enter Valid Message")
+        @Email(message = "Enter Valid Email")
         @Size(max = 255)
         String email,
+
+        @NotBlank(message = "subject required")
+        @Size(max = 90)
+        String subject,
 
         @NotBlank(message = "Message required")
         @Size(min = 10, max = 2000, message = "Message 10-2000 chars")
