@@ -38,7 +38,7 @@ public class TestController {
 
         log.info("Contact submission from IP: {}", ipAddress);
 
-        ContactResponseDTO response = contactService.save(dto);
+        ContactResponseDTO response = contactService.submitContact(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -52,10 +52,11 @@ public class TestController {
                 "Bot Name",
                 "bot@spam.com",
                 "spam message",
+                "",
                 "http://spam.com"   // honeypot filled
         );
 
-        ContactResponseDTO response = contactService.save(
+        ContactResponseDTO response = contactService.submitContact(
                 botDto
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -70,15 +71,16 @@ public class TestController {
                 "Same Person",
                 "same@email.com",
                 "First message",
-                null
+                "",
+                ""
         );
 
         // first submission
-        contactService.save(dto);
+        contactService.submitContact(dto);
 
         // second submission — same email within 10 min
         // this throws DuplicateContactException
-        ContactResponseDTO response = contactService.save(
+        ContactResponseDTO response = contactService.submitContact(
                 dto
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -92,12 +94,13 @@ public class TestController {
         // @Valid will reject this — blank name, invalid email
         ContactRequestDTO dto = new ContactRequestDTO(
                 "",              // blank name — fails @NotBlank
-                "not-an-email",  // fails @Email
+                "not-an-email",  // fails @Email,
+                "not a subject",
                 "hi",            // too short — fails @Size(min=10)
                 null
         );
 
-        ContactResponseDTO response = contactService.save(
+        ContactResponseDTO response = contactService.submitContact(
                 dto
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
