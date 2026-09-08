@@ -54,15 +54,17 @@ public class AuditLog {
     private Instant changedAt;
 
     // -- Factory method -- clean creation --
-    public static AuditLog of( UUID contactId,
-                               MessageStatus from,
-                               MessageStatus to,
-                               String actor,
-                               String note){
+    public static AuditLog of(
+            UUID contactId,
+            MessageStatus oldStatus,
+            MessageStatus newStatus,
+            String actor,
+            String note
+    ){
         return AuditLog.builder()
                 .contactId(contactId)
-                .oldStatus(from)
-                .newStatus(to)
+                .oldStatus(oldStatus)
+                .newStatus(newStatus)
                 .changedBy(actor)
                 .note(note)
                 .build();
