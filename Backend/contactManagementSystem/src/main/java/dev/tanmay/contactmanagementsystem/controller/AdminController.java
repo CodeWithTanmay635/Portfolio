@@ -69,21 +69,6 @@ public class AdminController {
         );
     }
 
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<ApiResponse<AdminContactResponseDTO>> updateStatus(
-            @PathVariable UUID id,
-            @Valid @RequestBody StatusUpdateRequest dto
-            ){
-        log.info("Status update - ID: {} -> {}", id, dto.newStatus());
-
-        AdminContactResponseDTO response =
-                statusWorkFlowService.updateStatus(id,dto);
-
-        return ResponseEntity.ok(
-                ApiResponse.success("Message updated", response)
-        );
-    }
-
     @PostMapping("/{id}/reply")
     public ResponseEntity<ApiResponse<AdminContactResponseDTO>> reply(
             @PathVariable UUID id,
