@@ -63,7 +63,7 @@ public class Contact {
         private String message;
 
         @Enumerated(EnumType.STRING)
-        @Column(nullable = false, updatable = false)
+        @Column(nullable = false)
         @Builder.Default
         private MessageStatus status = MessageStatus.NEW;
 

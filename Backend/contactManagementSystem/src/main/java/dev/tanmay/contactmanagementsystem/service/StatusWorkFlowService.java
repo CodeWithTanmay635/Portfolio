@@ -11,7 +11,6 @@ import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
 import dev.tanmay.contactmanagementsystem.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

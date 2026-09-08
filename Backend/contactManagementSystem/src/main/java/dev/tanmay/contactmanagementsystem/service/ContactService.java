@@ -134,10 +134,12 @@
         }
 
         private void createAuditLog(Contact contact , String ipAddress){
-                auditLogRepository.save(AuditLog.of(
+            MessageStatus oldStatus =  contact.getStatus();
+
+                    auditLogRepository.save(AuditLog.of(
                         contact.getId(),
                         MessageStatus.NEW,
-                        MessageStatus.NEW,
+                        oldStatus,
                         "SYSTEM",
                         "Initial submission"+ ipAddress
                 ));

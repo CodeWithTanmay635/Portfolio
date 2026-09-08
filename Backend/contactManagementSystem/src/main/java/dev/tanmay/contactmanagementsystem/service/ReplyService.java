@@ -44,8 +44,8 @@ public class ReplyService {
             ReplyRequest  dto
     ){
         Contact contact = findContact(id);
-        MessageStatus oldStatus = contact.getStatus();
         validateReply(contact);
+        MessageStatus oldStatus = contact.getStatus();
         mailService.sendReply(contact, dto);
         contact.markReplied();
         Contact saved = contactRepository.save(contact);
@@ -75,11 +75,11 @@ public class ReplyService {
                 .getAuthentication()
                 .getName();
 
-        auditLogRepository.save(AuditLog.of (
+       auditLogRepository.save(AuditLog.of (
                 contact.getId(),
                 status,
                 MessageStatus.REPLIED,
-                actor,
+                 actor,
                 "Reply Sent subject :" + subject
         ));
    }
