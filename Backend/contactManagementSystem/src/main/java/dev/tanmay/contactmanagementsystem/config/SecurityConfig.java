@@ -56,6 +56,7 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.disable()))
                 .sessionManagement(session -> session
