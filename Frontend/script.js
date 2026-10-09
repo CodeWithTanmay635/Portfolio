@@ -300,3 +300,74 @@ function initMagneticButtons() {
     });
 }
 
+/* =========================================
+   CONTACT FORM → SPRING BOOT API
+========================================= */
+
+function initContactForm() {
+
+    const form = document.querySelector("#portfolio-form");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const name = document.querySelector("#form-name").value.trim();
+        const email = document.querySelector("#form-email").value.trim();
+        const subject = document.querySelector("#form-subject").value.trim();
+        const message = document.querySelector("#form-message").value.trim();
+
+        const contactData = {
+            name,
+            email,
+            subject,
+            message
+        };
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:8081/api/v1/contacts",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(contactData)
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.message || "Something went wrong"
+                );
+            }
+
+            console.log("Contact submitted successfully:", result);
+
+            alert("Message sent successfully!");
+
+            form.reset();
+
+        } catch (error) {
+
+            console.error("Contact submission failed:", error);
+
+            alert(
+                error.message ||
+                "Unable to send message. Please try again."
+            );
+        }
+    });
+}
+
+
+
+initLoaderAndEntrances();
+initOptimizedMouseFollower();
+initImageHoverMatrix();
+initContactForm();
