@@ -1,3 +1,4 @@
+
 package dev.tanmay.contactmanagementsystem.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -21,23 +30,22 @@ public class SecurityConfig {
 
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(CustomAuthenticationEntryPoint authenticationEntryPoint) {
-        this.authenticationEntryPoint = authenticationEntryPoint;
-    }
-
     @Value("${app.admin.username}")
     private String adminUsername;
 
     @Value("${app.admin.password}")
     private String adminPassword;
 
-    // ── bean 1 — password encoder ──────────────────────────────
+    public SecurityConfig(
+            CustomAuthenticationEntryPoint authenticationEntryPoint) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+    }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // ── bean 2 — in memory admin user ─────────────────────────
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.builder()
@@ -49,38 +57,70 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin);
     }
 
-    // ── bean 3 — filter chain rules ────────────────────────────
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)
+    public SecurityContextRepository securityContextRepository() {
+        return new HttpSessionSecurityContextRepository();
+    }
+
+    @Bean
+    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new ChangeSessionIdAuthenticationStrategy();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            SecurityContextRepository securityContextRepository)
             throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.disable()))
+
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(
+                                CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(
+                                new CsrfTokenRequestAttributeHandler())
+                        // The public form doesn't use session-based authentication.
+                        .ignoringRequestMatchers(
+                                String.valueOf(HttpMethod.POST), "/api/v1/contacts")
+                )
+
+                .securityContext(context -> context
+                        .securityContextRepository(securityContextRepository)
+                )
+
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )
+
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
                 )
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/v1/contacts")
-                        .permitAll()
+                                HttpMethod.POST, "/api/v1/contacts"
+                        ).permitAll()
 
-                        .requestMatchers("/h2-console/**")
-                        .permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/logout",
+                                "/api/v1/auth/me",
+                                "/api/v1/auth/csrf"
+                        ).permitAll()
 
                         .requestMatchers("/api/v1/admin/**")
                         .hasRole("ADMIN")
 
-                        .anyRequest()
-                        .authenticated()
-                )
-                .httpBasic(Customizer.withDefaults());
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }

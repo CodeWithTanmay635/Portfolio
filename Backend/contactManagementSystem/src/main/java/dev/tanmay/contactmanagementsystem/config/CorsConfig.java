@@ -1,3 +1,4 @@
+
 package dev.tanmay.contactmanagementsystem.config;
 
 import org.springframework.context.annotation.Bean;
@@ -13,22 +14,18 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:63342")
-        );
+                List.of("http://localhost:63342"));
 
         configuration.setAllowedMethods(
-                List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS")
-        );
+                List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
 
         configuration.setAllowedHeaders(
-                List.of("*")
-        );
+                List.of("Content-Type", "X-XSRF-TOKEN"));
 
-        configuration.setAllowCredentials(false);
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
