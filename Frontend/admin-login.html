@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080808">
+    <title>ICMS — Admin Sign In</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
+</head>
+
+<body class="admin-body login-page">
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Header -->
+<header class="topbar">
+    <a class="wordmark" href="index.html"><b>t.</b> TANMAY <i>/</i> ICMS</a>
+    <span class="top-label">PRIVATE WORKSPACE <em></em></span>
+</header>
+
+<!-- Main Login Layout -->
+<main class="login-layout">
+
+    <!-- Left Column: Copy & Branding -->
+    <section class="login-copy">
+        <p class="eyebrow">COMMUNICATION GATEWAY / 01</p>
+        <h1>Your inbox.<br><span>Your space.</span></h1>
+        <p class="description">A quieter place to handle conversations, project enquiries, and the people behind them.</p>
+        <div class="secure-caption">
+            <i class="ri-shield-keyhole-line"></i>
+            <span>
+          Restricted access<br>
+          <small>Authorized administrator only</small>
+        </span>
+        </div>
+    </section>
+
+    <!-- Right Column: Login Card -->
+    <section class="login-card">
+        <p class="card-index">ICMS <span>— AUTHENTICATION</span></p>
+        <div class="fingerprint">
+            <i class="ri-fingerprint-line"></i>
+        </div>
+        <h2>Welcome back.</h2>
+        <p class="muted">Sign in to continue to your workspace.</p>
+
+        <form id="admin-login-form">
+            <label for="username">Username</label>
+            <div class="field">
+                <i class="ri-user-3-line"></i>
+                <input id="username" name="username" autocomplete="username" placeholder="Admin username" required>
+            </div>
+
+            <label for="password">Password</label>
+            <div class="field">
+                <i class="ri-lock-2-line"></i>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+                <button type="button" id="toggle-password" aria-label="Show password">
+                    <i class="ri-eye-line"></i>
+                </button>
+            </div>
+
+            <p id="login-error" class="error" role="alert"></p>
+
+            <button class="primary" id="login-submit">
+                <span>Enter workspace</span>
+                <i class="ri-arrow-right-up-line"></i>
+            </button>
+        </form>
+
+        <p class="secure-note">
+            <i class="ri-lock-line"></i> Secured with server-side sessions
+        </p>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <span>© <span id="year"></span> TANMAY PANSARE</span>
+    <span>ICMS / ADMIN PORTAL</span>
+    <a href="lets-talk.html">BACK TO PORTFOLIO ↗</a>
+</footer>
+
+<script src="admin.js"></script>
+</body>
+</html>

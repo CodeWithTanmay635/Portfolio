@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080808">
+    <title>ICMS — Inbox</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
+</head>
+
+<body class="admin-body dashboard-page">
+<div class="grain"></div>
+
+<!-- Sidebar Navigation -->
+<aside class="sidebar">
+    <a class="wordmark" href="index.html"><b>t.</b> TANMAY <i>/</i> ICMS</a>
+    <p class="side-label">WORKSPACE</p>
+
+    <a class="side-link active" href="admin-dashboard.html">
+        <i class="ri-inbox-2-line"></i> Inbox <span id="sidebar-count">—</span>
+    </a>
+    <a class="side-link" href="lets-talk.html">
+        <i class="ri-external-link-line"></i> Public contact page
+    </a>
+
+    <div class="sidebar-bottom">
+        <div class="profile">
+            <b id="profile-avatar">A</b>
+            <span>
+          <strong id="profile-name">Administrator</strong>
+          <small>Workspace admin</small>
+        </span>
+            <em></em>
+        </div>
+        <button class="side-link logout" id="logout-button">
+            <i class="ri-logout-box-r-line"></i> Sign out
+        </button>
+    </div>
+</aside>
+
+<!-- Main Dashboard Content -->
+<main class="dashboard-main">
+    <header class="dashboard-top">
+        <div class="crumb">
+            WORKSPACE <i class="ri-arrow-right-s-line"></i> <strong>Inbox</strong>
+        </div>
+        <div class="top-actions">
+            <span><em></em> SESSION SECURE</span>
+            <button class="icon-btn" id="refresh-button" aria-label="Refresh">
+                <i class="ri-refresh-line"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="dashboard-heading">
+        <div>
+            <p class="eyebrow">COMMUNICATIONS / OVERVIEW</p>
+            <h1>Inbox<span>.</span></h1>
+            <p class="muted">Every conversation starts somewhere. Here's yours.</p>
+        </div>
+        <div class="date-chip">
+            <i class="ri-calendar-2-line"></i>
+            <span id="today-label"></span>
+        </div>
+    </section>
+
+    <!-- Statistics Cards -->
+    <section class="stats">
+        <article>
+            <p>Total messages <i class="ri-mail-open-line"></i></p>
+            <strong id="stat-total">—</strong>
+            <small>All conversations</small>
+        </article>
+        <article>
+            <p>Needs attention <i class="ri-time-line"></i></p>
+            <strong id="stat-open">—</strong>
+            <small>New or pending on this page</small>
+        </article>
+        <article>
+            <p>Replied <i class="ri-check-double-line"></i></p>
+            <strong id="stat-replied">—</strong>
+            <small>On this page</small>
+        </article>
+        <article>
+            <p>Critical priority <i class="ri-alarm-warning-line"></i></p>
+            <strong id="stat-critical">—</strong>
+            <small>On this page</small>
+        </article>
+    </section>
+
+    <!-- Inbox Panel & Data Table -->
+    <section class="inbox-panel">
+        <div class="panel-head">
+            <div>
+                <p class="eyebrow">YOUR MESSAGES</p>
+                <h2>All conversations <small id="result-count"></small></h2>
+            </div>
+            <span class="live-label"><em></em> LIVE DATA</span>
+        </div>
+
+        <div class="toolbar">
+            <label class="search">
+                <i class="ri-search-line"></i>
+                <input id="search-input" type="search" placeholder="Search current page…" autocomplete="off">
+                <kbd>/</kbd>
+            </label>
+            <label class="filter">
+                Status
+                <select id="status-filter">
+                    <option value="">All statuses</option>
+                    <option>NEW</option>
+                    <option>READ</option>
+                    <option>PENDING</option>
+                    <option>REPLIED</option>
+                    <option>ARCHIVED</option>
+                </select>
+            </label>
+            <label class="filter">
+                Priority
+                <select id="priority-filter">
+                    <option value="">All priorities</option>
+                    <option>CRITICAL</option>
+                    <option>HIGH</option>
+                    <option>MEDIUM</option>
+                    <option>LOW</option>
+                </select>
+            </label>
+            <button class="reset" id="clear-filters">Reset ×</button>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>CONTACT</th>
+                    <th>MESSAGE</th>
+                    <th>PRIORITY</th>
+                    <th>STATUS</th>
+                    <th>RECEIVED</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="messages-body">
+                <tr>
+                    <td colspan="6" class="table-state">Loading your inbox…</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-footer">
+            <span id="page-summary">Loading messages…</span>
+            <div>
+                <button class="icon-btn" id="previous-page" aria-label="Previous page" disabled>
+                    <i class="ri-arrow-left-s-line"></i>
+                </button>
+                <span id="page-number">1</span>
+                <button class="icon-btn" id="next-page" aria-label="Next page" disabled>
+                    <i class="ri-arrow-right-s-line"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="dashboard-footer">
+        <span>ICMS / COMMUNICATION GATEWAY</span>
+        <span>BUILT FOR BETTER CONVERSATIONS.</span>
+    </footer>
+</main>
+
+<!-- Notifications & Modals -->
+<div class="toast-region" id="toast-region" aria-live="polite"></div>
+
+<!-- Message Detail Dialog -->
+<dialog id="message-dialog" class="dialog">
+    <div class="dialog-head">
+        <div>
+            <p class="eyebrow">MESSAGE DETAILS</p>
+            <h2 id="detail-name">Conversation</h2>
+        </div>
+        <button class="icon-btn" id="close-dialog" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+    <div id="detail-content"></div>
+    <div id="detail-actions" class="dialog-actions"></div>
+</dialog>
+
+<!-- Reply Dialog -->
+<dialog id="reply-dialog" class="dialog">
+    <div class="dialog-head">
+        <div>
+            <p class="eyebrow">REPLY TO MESSAGE</p>
+            <h2>Write a response<span>.</span></h2>
+        </div>
+        <button class="icon-btn" id="close-reply" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+    <form id="reply-form">
+        <p id="reply-recipient" class="recipient"></p>
+
+        <label for="reply-subject">Subject <small>20–200 characters</small></label>
+        <input id="reply-subject" minlength="20" maxlength="200" required>
+
+        <label for="reply-body">Message <small>100–5000 characters</small></label>
+        <textarea id="reply-body" rows="7" minlength="100" maxlength="5000" required placeholder="Write a thoughtful response…"></textarea>
+
+        <div class="reply-meta">
+            <span id="reply-length">0 / 5000</span>
+            <span>Sent through configured mail service</span>
+        </div>
+        <p id="reply-error" class="error"></p>
+
+        <button class="primary" id="send-reply">
+            <span>Send reply</span>
+            <i class="ri-send-plane-line"></i>
+        </button>
+    </form>
+</dialog>
+
+<script src="admin.js"></script>
+</body>
+</html>
