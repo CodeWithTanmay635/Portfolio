@@ -1,33 +1,77 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# ==============================
+# Secrets and environment files
+# ==============================
+.env
+.env.*
+!.env.example
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+**/application-local.properties
+**/application-secrets.properties
+**/application-production-local.properties
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Keep application.properties and application-production.properties
+# only if they contain environment-variable placeholders, not real secrets.
+
+# ==============================
+# Java / Maven
+# ==============================
+**/target/
+**/build/
+**/out/
+*.class
+*.jar
+*.war
+hs_err_pid*
+
+# Maven wrapper JAR can be committed if the project uses it.
+# Do not ignore .mvn/wrapper/maven-wrapper.jar by default.
+
+# ==============================
+# IDEs
+# ==============================
+.idea/
+.vscode/
 *.iml
 *.ipr
+*.iws
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# ==============================
+# Operating system
+# ==============================
+.DS_Store
+Thumbs.db
+Desktop.ini
 
-### VS Code ###
-.vscode/
+# ==============================
+# Logs
+# ==============================
+*.log
+logs/
+
+# ==============================
+# Node.js / frontend
+# ==============================
+**/node_modules/
+**/.next/
+**/dist/
+**/coverage/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.python-version
+
+# ==============================
+# Temporary files
+# ==============================
+*.tmp
+*.bak
+*.swp
+*.swo
