@@ -300,72 +300,198 @@ function initMagneticButtons() {
     });
 }
 
+
 /* =========================================
    CONTACT FORM → SPRING BOOT API
+   Production-conscious implementation
 ========================================= */
 
 function initContactForm() {
-
     const form = document.querySelector("#portfolio-form");
 
     if (!form) return;
 
-    form.addEventListener("submit", async (event) => {
+    // Replace with your actual Render Web Service URL.
+    const API_URL =
+        "https://YOUR-BACKEND-NAME.onrender.com/api/v1/contacts";
 
+    const submitButton = form.querySelector(
+        'button[type="submit"], input[type="submit"]'
+    );
+
+    let isSubmitting = false;
+
+    // Optional status element; create one in your HTML if desired.
+    const statusElement = document.querySelector("#form-status");
+
+    function showStatus(message, type = "info") {
+        if (statusElement) {
+            statusElement.textContent = message;
+            statusElement.dataset.status = type;
+            statusElement.setAttribute("role", "status");
+            statusElement.setAttribute("aria-live", "polite");
+        } else {
+            alert(message);
+        }
+    }
+
+    function setSubmitting(submitting) {
+        isSubmitting = submitting;
+
+        if (submitButton) {
+            submitButton.disabled = submitting;
+            submitButton.setAttribute(
+                "aria-busy",
+                String(submitting)
+            );
+        }
+
+        form.setAttribute("aria-busy", String(submitting));
+    }
+
+    async function readResponse(response) {
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        if (contentType.includes("application/json")) {
+            try {
+                return await response.json();
+            } catch {
+                return {};
+            }
+        }
+
+        // Handles plain-text errors, HTML error pages, and empty responses.
+        const text = await response.text().catch(() => "");
+        return text ? { message: text.slice(0, 300) } : {};
+    }
+
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const name = document.querySelector("#form-name").value.trim();
-        const email = document.querySelector("#form-email").value.trim();
-        const subject = document.querySelector("#form-subject").value.trim();
-        const message = document.querySelector("#form-message").value.trim();
+        if (isSubmitting) return;
+
+        // Native required/type constraints are checked by the browser.
+        if (!form.reportValidity()) return;
+
+        const nameInput = form.querySelector("#form-name");
+        const emailInput = form.querySelector("#form-email");
+        const subjectInput = form.querySelector("#form-subject");
+        const messageInput = form.querySelector("#form-message");
+
+        if (
+            !nameInput ||
+            !emailInput ||
+            !subjectInput ||
+            !messageInput
+        ) {
+            showStatus(
+                "The contact form is temporarily unavailable. Please try again later.",
+                "error"
+            );
+            console.error("Contact form is missing one or more required fields.");
+            return;
+        }
 
         const contactData = {
-            name,
-            email,
-            subject,
-            message
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            subject: subjectInput.value.trim(),
+            message: messageInput.value.trim()
         };
 
-        try {
+        // Basic client-side checks. The backend must validate independently.
+        if (
+            !contactData.name ||
+            !contactData.email ||
+            !contactData.subject ||
+            !contactData.message
+        ) {
+            showStatus("Please complete all fields.", "error");
+            return;
+        }
 
-            const response = await fetch(
-                "http://localhost:8081/api/v1/contacts",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(contactData)
-                }
+        if (
+            contactData.name.length > 80 ||
+            contactData.email.length > 254 ||
+            contactData.subject.length > 150 ||
+            contactData.message.length > 1500
+        ) {
+            showStatus(
+                "One or more fields exceed the allowed length.",
+                "error"
             );
+            return;
+        }
 
-            const result = await response.json();
+        // Prevent accidental duplicate clicks while the request is running.
+        setSubmitting(true);
+        showStatus("Sending your message…", "info");
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(contactData)
+            });
+
+            const result = await readResponse(response);
 
             if (!response.ok) {
+                if (response.status === 400 || response.status === 422) {
+                    throw new Error(
+                        result.message ||
+                        "Please check your details and try again."
+                    );
+                }
+
+                if (response.status === 429) {
+                    throw new Error(
+                        "Too many attempts. Please wait a little and try again."
+                    );
+                }
+
+                if (response.status >= 500) {
+                    throw new Error(
+                        "The server is temporarily unavailable. Please try again later."
+                    );
+                }
+
                 throw new Error(
-                    result.message || "Something went wrong"
+                    result.message ||
+                    `We couldn't send your message (HTTP ${response.status}).`
                 );
             }
 
-            console.log("Contact submitted successfully:", result);
-
-            alert("Message sent successfully!");
+            console.info("Contact form submission succeeded.");
 
             form.reset();
 
-        } catch (error) {
-
-            console.error("Contact submission failed:", error);
-
-            alert(
-                error.message ||
-                "Unable to send message. Please try again."
+            showStatus(
+                "Your message has been sent successfully. Thank you!",
+                "success"
             );
+        } catch (error) {
+            console.error("Contact form submission failed:", error);
+
+            // Do not expose internal server details to visitors.
+            const message =
+                error instanceof TypeError
+                    ? "Unable to reach the server. Please check your connection and try again."
+                    : error.message;
+
+            showStatus(
+                message || "Unable to send your message. Please try again.",
+                "error"
+            );
+        } finally {
+            setSubmitting(false);
         }
     });
 }
-
-
 
 initLoaderAndEntrances();
 initOptimizedMouseFollower();
