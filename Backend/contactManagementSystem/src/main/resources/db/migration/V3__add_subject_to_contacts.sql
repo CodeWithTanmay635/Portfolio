@@ -1,0 +1,2 @@
+ALTER TABLE contacts
+    ADD COLUMN subject VARCHAR(90) NOT NULL DEFAULT '';

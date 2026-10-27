@@ -1,7 +1,10 @@
 package dev.tanmay.contactmanagementsystem.service;
 
 import dev.tanmay.contactmanagementsystem.dto.request.StatusUpdateRequest;
+
+import dev.tanmay.contactmanagementsystem.exception.ContactNotFoundException;
 import dev.tanmay.contactmanagementsystem.exception.InvalidStatusTransitionException;
+import dev.tanmay.contactmanagementsystem.model.AuditLog;
 import dev.tanmay.contactmanagementsystem.model.Contact;
 import dev.tanmay.contactmanagementsystem.model.enums.MessageStatus;
 import dev.tanmay.contactmanagementsystem.repository.AuditLogRepository;
@@ -13,7 +16,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import dev.tanmay.contactmanagementsystem.dto.response.AdminContactResponseDTO;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class StatusWorkFlowServiceTest {
@@ -29,32 +37,47 @@ public class StatusWorkFlowServiceTest {
     @MockitoBean
     private JavaMailSender javaMailSender;
 
+
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldRejectInvalidStatusTransition() {
+    void shouldCreateExactlyOneAuditLogForStatusChange() {
 
         Contact contact = Contact.builder()
                 .name("Test User")
-                .email("test2@example.com")
+                .email("test16@example.com")
                 .subject("Test Subject")
                 .message("Test message")
-                .referenceId("TEST-002")
-                .status(MessageStatus.ARCHIVED)
+                .referenceId("TEST-016")
+                .status(MessageStatus.NEW)
                 .build();
 
         contactRepository.save(contact);
 
         StatusUpdateRequest request = new StatusUpdateRequest(
-                MessageStatus.REPLIED,
-                "Trying invalid transition."
+                MessageStatus.READ,
+                "Marking contact as read."
         );
 
-        assertThrows(
-                InvalidStatusTransitionException.class,
-                () -> statusWorkFlowService.updateStatus(
-                        contact.getId(),
-                        request
-                )
+        statusWorkFlowService.updateStatus(
+                contact.getId(),
+                request
+        );
+
+        List<AuditLog> logs =
+                auditLogRepository.findAllByContactIdOrderByChangedAtAsc(
+                        contact.getId()
+                );
+
+        assertEquals(1, logs.size());
+
+        assertEquals(
+                MessageStatus.NEW,
+                logs.get(0).getOldStatus()
+        );
+
+        assertEquals(
+                MessageStatus.READ,
+                logs.get(0).getNewStatus()
         );
     }
 }
