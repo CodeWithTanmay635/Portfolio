@@ -313,7 +313,7 @@ function initContactForm() {
 
     // Replace with your actual Render Web Service URL.
     const API_URL =
-        "https://YOUR-BACKEND-NAME.onrender.com/api/v1/contacts";
+        "https://portfolio-backend-wgvw.onrender.com/";
 
     const submitButton = form.querySelector(
         'button[type="submit"], input[type="submit"]'
