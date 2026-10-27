@@ -112,6 +112,10 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
+                                HttpMethod.OPTIONS, "/**"
+                        ).permitAll()
+
+                        .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/logout",
                                 "/api/v1/auth/me",
