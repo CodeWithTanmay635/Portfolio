@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.session.ChangeSessionIdAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -89,7 +90,8 @@ public class SecurityConfig {
                                 new CsrfTokenRequestAttributeHandler())
                         // The public form doesn't use session-based authentication.
                         .ignoringRequestMatchers(
-                                String.valueOf(HttpMethod.POST), "/api/v1/contacts")
+                                new AntPathRequestMatcher("/api/v1/contacts", "POST")
+)
                 )
 
                 .securityContext(context -> context
