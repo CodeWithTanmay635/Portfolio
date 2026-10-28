@@ -2,7 +2,7 @@
     "use strict";
 
     // --- Configuration & State ---
-    const API = "https://portfolio-backend-wgvw.onrender.com/api/v1";
+    const API = "https://api.tan-may.dev/api/v1";
     const $ = s => document.querySelector(s);
 
     const state = {
