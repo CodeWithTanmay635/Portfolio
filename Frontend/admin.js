@@ -2,7 +2,7 @@
     "use strict";
 
     // --- Configuration & State ---
-    const API = "http://localhost:8081/api/v1";
+    const API = "https://portfolio-backend-wgvw.onrender.com/api/v1";
     const $ = s => document.querySelector(s);
 
     const state = {
