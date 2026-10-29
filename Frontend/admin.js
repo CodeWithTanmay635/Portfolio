@@ -349,28 +349,53 @@
     }
 
     // --- Row Actions ---
-    async function rowAction(e) {
-        const b = e.target.closest("button[data-action]");
-        if (!b) return;
+    
+async function rowAction(e) {
+    const row = e.target.closest("tr[data-id]");
+    if (!row) return;
 
-        const row = b.closest("tr");
-        const m = state.messages.find(x => String(x.id) === row.dataset.id);
-        if (!m) return;
+    const m = state.messages.find(
+        x => String(x.id) === row.dataset.id
+    );
+    if (!m) return;
 
-        if (b.dataset.action === "view") return view(m);
-        if (b.dataset.action === "reply") return openReply(m);
+    // Preserve individual action buttons.
+    const button = e.target.closest("button[data-action]");
 
-        if (b.dataset.action === "delete") {
-            if (!confirm(`Permanently delete this message from ${m.name || "this contact"}? This cannot be undone.`)) return;
+    if (button) {
+        if (button.dataset.action === "view") {
+            return view(m);
+        }
+
+        if (button.dataset.action === "reply") {
+            return openReply(m);
+        }
+
+        if (button.dataset.action === "delete") {
+            if (!confirm(
+                `Permanently delete this message from ${m.name || "this contact"}? This cannot be undone.`
+            )) return;
+
             try {
-                await request("/admin/contacts/" + encodeURIComponent(m.id), { method: "DELETE" });
+                await request(
+                    "/admin/contacts/" + encodeURIComponent(m.id),
+                    { method: "DELETE" }
+                );
+
                 toast("Message deleted.");
                 await load();
             } catch (err) {
                 toast(err.message, true);
             }
         }
+
+        return;
     }
+
+    // Gmail-style: clicking anywhere else on the row opens the message.
+    view(m);
+}
+
 
     async function view(m) {
         state.selected = m;
