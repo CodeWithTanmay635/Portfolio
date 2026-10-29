@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,14 +17,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
-import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -75,23 +75,34 @@ public class SecurityConfig {
     }
 
     @Bean
+    public CookieCsrfTokenRepository csrfTokenRepository() {
+        CookieCsrfTokenRepository repository =
+                CookieCsrfTokenRepository.withHttpOnlyFalse();
+
+        repository.setCookieCustomizer(cookie -> cookie
+                .sameSite("None")
+                .secure(true)
+                .path("/"));
+
+        return repository;
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
-            SecurityContextRepository securityContextRepository)
-            throws Exception {
+            SecurityContextRepository securityContextRepository,
+            CookieCsrfTokenRepository csrfTokenRepository) throws Exception {
 
         http
                 .cors(Customizer.withDefaults())
 
                 .csrf(csrf -> csrf
-                        .csrfTokenRepository(
-                                CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRepository(csrfTokenRepository)
                         .csrfTokenRequestHandler(
                                 new CsrfTokenRequestAttributeHandler())
-                        // The public form doesn't use session-based authentication.
                         .ignoringRequestMatchers(
-                                new AntPathRequestMatcher("/api/v1/contacts", "POST")
-)
+                                new AntPathRequestMatcher(
+                                        "/api/v1/contacts", "POST"))
                 )
 
                 .securityContext(context -> context
@@ -107,24 +118,15 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                HttpMethod.POST, "/api/v1/contacts"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                HttpMethod.OPTIONS, "/**"
-                        ).permitAll()
-
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/contacts").permitAll()
                         .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/logout",
                                 "/api/v1/auth/me",
                                 "/api/v1/auth/csrf"
                         ).permitAll()
-
-                        .requestMatchers("/api/v1/admin/**")
-                        .hasRole("ADMIN")
-
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 
